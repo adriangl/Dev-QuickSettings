@@ -16,6 +16,6 @@
   -->
 
 <resources>
-    <string name="app_name" translatable="false">DevQuickTiles</string>
+    <string name="app_name" translatable="false">Dev QuickSettings</string>
     <string name="permissions_to_grant" translatable="false">adb shell pm grant %1$s android.permission.WRITE_SECURE_SETTINGS\n\nadb shell pm grant %1$s android.permission.DUMP</string>
 </resources>

@@ -35,8 +35,6 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin">
 
-            <requestFocus />
-
             <!-- Grant permissions view -->
             <include layout="@layout/grant_permissions_dialog" />
 
