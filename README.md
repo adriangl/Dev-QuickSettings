@@ -2,7 +2,7 @@
 ## What is this?
 Android Quick Settings Tiles for Android development written in [Kotlin](https://kotlinlang.org/).
 
-![Main image](https://raw.githubusercontent.com/adriangl/Android-Dev-QuickSettings/master/graphics/screenshots/en-US_main.png)
+![Main image](https://raw.githubusercontent.com/adriangl/Dev-QuickSettings/master/graphics/screenshots/en-US_main.png)
 
 The app is based on the work of [Nick Butcher](https://github.com/nickbutcher) and his [Animator Duration Quick Settings Tile](https://github.com/nickbutcher/AnimatorDurationTile) which I borrowed for the animation duration tile.
 
