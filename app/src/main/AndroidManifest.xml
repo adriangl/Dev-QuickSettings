@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Adrián García
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +19,16 @@
     package="com.adriangl.devquicktiles">
 
     <!--
+        Permission needed to read/write from Settings, must be granted from adb with
+        adb shell pm grant <package-name> android.permission.WRITE_SETTINGS
+    -->
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <!--
         Permission needed to read/write from secure Settings, must be granted from adb with
-        adb shell pm grant <package-name> android.permission.WRITE_SECURE_SETTING
+        adb shell pm grant <package-name> android.permission.WRITE_SECURE_SETTINGS
     -->
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
@@ -40,6 +47,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:name=".base.BaseApplication"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -87,6 +95,16 @@
             android:icon="@drawable/ic_qs_animator_duration_enabled"
             android:label="@string/qs_animator_duration"
             android:name="com.adriangl.devquicktiles.tiles.animatorduration.AnimatorDurationTileService"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:icon="@drawable/ic_qs_show_taps_enabled"
+            android:label="@string/qs_show_taps"
+            android:name="com.adriangl.devquicktiles.tiles.show_taps.ShowTapsTileService"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />

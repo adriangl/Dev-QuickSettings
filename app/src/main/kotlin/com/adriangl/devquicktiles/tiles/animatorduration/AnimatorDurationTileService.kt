@@ -32,11 +32,11 @@ class AnimatorDurationTileService : DevelopmentTileService<Float>() {
     }
 
     override fun queryValue(): Float {
-        return SettingsUtils.getFloatSetting(contentResolver, SETTING)
+        return SettingsUtils.getFloatFromGlobalSettings(contentResolver, SETTING)
     }
 
-    override fun saveValue(value: Float) {
-        SettingsUtils.setFloatSetting(contentResolver, SETTING, value)
+    override fun saveValue(value: Float): Boolean {
+        return SettingsUtils.setFloatToGlobalSettings(contentResolver, SETTING, value)
     }
 
     override fun getValueList(): List<Float> {

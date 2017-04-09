@@ -33,11 +33,11 @@ class KeepScreenOnTileService : DevelopmentTileService<Int>() {
     }
 
     override fun queryValue(): Int {
-        return SettingsUtils.getIntSetting(contentResolver, SETTING)
+        return SettingsUtils.getIntFromGlobalSettings(contentResolver, SETTING)
     }
 
-    override fun saveValue(value: Int) {
-        SettingsUtils.setIntSetting(contentResolver, SETTING, value)
+    override fun saveValue(value: Int) : Boolean {
+        return SettingsUtils.setIntToGlobalSettings(contentResolver, SETTING, value)
     }
 
     override fun getValueList(): List<Int> {

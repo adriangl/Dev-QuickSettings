@@ -32,13 +32,13 @@ class UsbDebuggingTileService : DevelopmentTileService<Int>() {
     }
 
     override fun queryValue(): Int {
-        var value = SettingsUtils.getIntSetting(contentResolver, SETTING)
+        var value = SettingsUtils.getIntFromGlobalSettings(contentResolver, SETTING)
         if (value > 1) value = 1
         return value
     }
 
-    override fun saveValue(value: Int) {
-        SettingsUtils.setIntSetting(contentResolver, SETTING, value)
+    override fun saveValue(value: Int) : Boolean {
+        return SettingsUtils.setIntToGlobalSettings(contentResolver, SETTING, value)
     }
 
     override fun getValueList(): List<Int> {

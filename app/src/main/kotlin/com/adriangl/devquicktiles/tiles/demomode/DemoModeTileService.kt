@@ -40,16 +40,24 @@ class DemoModeTileService : DevelopmentTileService<Int>() {
 
     override fun queryValue(): Int {
         return listOf(DemoMode.DEMO_MODE_ALLOWED, DemoMode.DEMO_MODE_ON)
-                .fold(1, { current, key -> SettingsUtils.getIntSetting(contentResolver, key) and current })
+                .fold(1, { current, key -> SettingsUtils.getIntFromGlobalSettings(contentResolver, key) and current })
     }
 
-    override fun saveValue(value: Int) {
-        listOf(DemoMode.DEMO_MODE_ALLOWED, DemoMode.DEMO_MODE_ON)
-                .forEach { SettingsUtils.setIntSetting(contentResolver, it, value) }
-        if (value != 0) {
-            startDemoMode()
+    override fun saveValue(value: Int): Boolean {
+        val isSettingEnabled =
+                listOf(DemoMode.DEMO_MODE_ALLOWED, DemoMode.DEMO_MODE_ON)
+                        .fold(true) {
+                            initial, setting -> initial && SettingsUtils.setIntToGlobalSettings(contentResolver, setting, value)
+                        }
+        if (isSettingEnabled) {
+            if (value != 0) {
+                startDemoMode()
+            } else {
+                stopDemoMode()
+            }
+            return true
         } else {
-            stopDemoMode()
+            return false
         }
     }
 

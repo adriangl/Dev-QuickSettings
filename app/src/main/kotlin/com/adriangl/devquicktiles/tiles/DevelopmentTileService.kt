@@ -27,10 +27,6 @@ abstract class DevelopmentTileService<T : Any> : TileService() {
 
     lateinit var value: T
 
-    override fun onTileAdded() {
-        Timber.d("Tile added: {label=%s}", qsTile.label)
-    }
-
     override fun onStartListening() {
         Timber.d("Tile started listening: {label=%s, state=%s}", qsTile.label, qsTile.state)
         value = queryValue()
@@ -38,31 +34,29 @@ abstract class DevelopmentTileService<T : Any> : TileService() {
     }
 
     override fun onClick() {
-        try {
-            Timber.d("Tile clicked: {label=%s, state=%s}", qsTile.label, qsTile.state)
-            setNextValue()
-        } catch (e: SecurityException) {
-            Toast.makeText(applicationContext,
-                    getString(R.string.qs_permissions_not_granted),
-                    Toast.LENGTH_SHORT)
-                    .show()
-        }
-    }
-
-    override fun onTileRemoved() {
-        Timber.d("Tile removed: {label=%s}", qsTile.label)
+        Timber.d("Tile clicked: {label=%s, state=%s}", qsTile.label, qsTile.state)
+        setNextValue()
     }
 
     private fun setNextValue() {
         val newIndex = ((getValueList().indexOf(value) + 1) % getValueList().size)
-        value = getValueList()[newIndex]
+        val newValue = getValueList()[newIndex]
         Timber.d("New value: %s, Tile: {label=%s, state=%s}", value, qsTile.label, qsTile.state)
 
         // Disable tile while setting the value
         qsTile.state = Tile.STATE_UNAVAILABLE
         qsTile.updateTile()
 
-        saveValue(value)
+        try {
+            if (saveValue(newValue)) {
+                value = newValue
+            }
+        } catch (e: Exception) {
+            val permissionNotGrantedString = getString(R.string.qs_permissions_not_granted)
+            Toast.makeText(applicationContext, permissionNotGrantedString, Toast.LENGTH_LONG)
+                    .show()
+            Timber.e(e, permissionNotGrantedString)
+        }
 
         updateState()
     }
@@ -83,7 +77,7 @@ abstract class DevelopmentTileService<T : Any> : TileService() {
 
     abstract fun queryValue(): T
 
-    abstract fun saveValue(value: T)
+    abstract fun saveValue(value: T): Boolean
 
     abstract fun getIcon(value: T): Icon?
 

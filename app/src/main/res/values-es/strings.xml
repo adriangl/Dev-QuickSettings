@@ -41,4 +41,6 @@
     <string name="main_permissions_not_granted_description">Para poder usar los mosaicos, debes conceder a la aplicación los siguientes permisos vía ADB:</string>
     <string name="main_permissions_not_granted_title">No se han concedido permisos a la aplicación</string>
     <string name="share_permissions">Compartir</string>
+    <string name="qs_show_taps">Mostrar toques</string>
+    <string name="qs_show_taps_description">Permite mostrar la ubicación de los toques en la pantalla.</string>
 </resources>

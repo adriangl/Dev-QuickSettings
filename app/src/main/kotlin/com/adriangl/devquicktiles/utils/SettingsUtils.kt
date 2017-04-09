@@ -21,20 +21,28 @@ import android.provider.Settings
 
 class SettingsUtils {
     companion object {
-        fun getIntSetting(contentResolver: ContentResolver, key: String): Int {
+        fun getIntFromGlobalSettings(contentResolver: ContentResolver, key: String): Int {
             return Settings.Global.getInt(contentResolver, key, 0)
         }
 
-        fun setIntSetting(contentResolver: ContentResolver, key: String, value: Int): Boolean {
+        fun setIntToGlobalSettings(contentResolver: ContentResolver, key: String, value: Int): Boolean {
             return Settings.Global.putInt(contentResolver, key, value)
         }
 
-        fun getFloatSetting(contentResolver: ContentResolver, key: String): Float {
+        fun getFloatFromGlobalSettings(contentResolver: ContentResolver, key: String): Float {
             return Settings.Global.getFloat(contentResolver, key, 0f)
         }
 
-        fun setFloatSetting(contentResolver: ContentResolver, key: String, value: Float): Boolean {
+        fun setFloatToGlobalSettings(contentResolver: ContentResolver, key: String, value: Float): Boolean {
             return Settings.Global.putFloat(contentResolver, key, value)
+        }
+
+        fun getIntFromSystemSettings(contentResolver: ContentResolver, key: String): Int {
+            return Settings.System.getInt(contentResolver, key, 0)
+        }
+
+        fun setIntToSystemSettings(contentResolver: ContentResolver, key: String, value: Int): Boolean {
+            return Settings.System.putInt(contentResolver, key, value)
         }
     }
 }

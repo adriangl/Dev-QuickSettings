@@ -97,25 +97,29 @@ class MainActivity : AppCompatActivity() {
     private fun getDescriptionItems(): List<QsDescriptionsItem> {
         return listOf(
                 QsDescriptionsItem(
-                        R.drawable.ic_qs_animator_duration_enabled,
-                        getString(R.string.qs_animator_duration),
-                        getString(R.string.qs_animator_duration_description)),
+                        R.drawable.ic_qs_usb_debugging_enabled,
+                        getString(R.string.qs_usb_debugging),
+                        getString(R.string.qs_usb_debugging_description)),
                 QsDescriptionsItem(
                         R.drawable.ic_qs_demo_mode_enabled,
                         getString(R.string.qs_demo_mode),
                         getString(R.string.qs_demo_mode_description)),
                 QsDescriptionsItem(
-                        R.drawable.ic_qs_finish_activities_enabled,
-                        getString(R.string.qs_finish_activities),
-                        getString(R.string.qs_finish_activities_description)),
-                QsDescriptionsItem(
                         R.drawable.ic_qs_keep_screen_on_enabled,
                         getString(R.string.qs_keep_screen_on),
                         getString(R.string.qs_keep_screen_on_description)),
                 QsDescriptionsItem(
-                        R.drawable.ic_qs_usb_debugging_enabled,
-                        getString(R.string.qs_usb_debugging),
-                        getString(R.string.qs_usb_debugging_description))
+                        R.drawable.ic_qs_animator_duration_enabled,
+                        getString(R.string.qs_animator_duration),
+                        getString(R.string.qs_animator_duration_description)),
+                QsDescriptionsItem(
+                        R.drawable.ic_qs_show_taps_enabled,
+                        getString(R.string.qs_show_taps),
+                        getString(R.string.qs_show_taps_description)),
+                QsDescriptionsItem(
+                        R.drawable.ic_qs_finish_activities_enabled,
+                        getString(R.string.qs_finish_activities),
+                        getString(R.string.qs_finish_activities_description))
         )
     }
 

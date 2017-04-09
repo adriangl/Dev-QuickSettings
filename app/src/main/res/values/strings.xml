@@ -36,6 +36,8 @@
     <string name="qs_animator_scale_2x">Animation scale 2x</string>
     <string name="qs_animator_scale_5x">Animation scale 5x</string>
     <string name="qs_animator_scale_10x">Animation scale 10x</string>
+    <string name="qs_show_taps">Show taps</string>
+    <string name="qs_show_taps_description">Allows showing tap locations on screen.</string>
 
     <!-- Strings related to permission management -->
     <string name="main_permissions_not_granted_title">App permissions have not been granted</string>

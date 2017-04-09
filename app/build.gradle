@@ -16,6 +16,7 @@
 
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
+apply from: "$rootDir/common.gradle"
 
 android {
     compileSdkVersion 25
@@ -23,9 +24,9 @@ android {
     defaultConfig {
         applicationId "com.adriangl.devquicksettings"
         minSdkVersion 24
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 22
+        versionCode computeVersionCode()
+        versionName computeVersionName()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
