@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Adrián García
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.adriangl.devquicktiles">
+
+    <!--
+        Permission needed to read/write from secure Settings, must be granted from adb with
+        adb shell pm grant <package-name> android.permission.WRITE_SECURE_SETTING
+    -->
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <!--
+        Permission needed to call demo mode broadcast action from code; must be granted from adb with
+        adb shell pm grant <package-name> android.permission.DUMP
+    -->
+    <uses-permission
+        android:name="android.permission.DUMP"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:name=".base.BaseApplication"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <service
+            android:icon="@drawable/ic_qs_usb_debugging_enabled"
+            android:label="@string/qs_usb_debugging"
+            android:name="com.adriangl.devquicktiles.tiles.usbdebug.UsbDebuggingTileService"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:icon="@drawable/ic_qs_finish_activities_enabled"
+            android:label="@string/qs_finish_activities"
+            android:name="com.adriangl.devquicktiles.tiles.finishactivities.FinishActivitiesTileService"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:icon="@drawable/ic_qs_keep_screen_on_enabled"
+            android:label="@string/qs_keep_screen_on"
+            android:name="com.adriangl.devquicktiles.tiles.screenon.KeepScreenOnTileService"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:icon="@drawable/ic_qs_demo_mode_enabled"
+            android:label="@string/qs_demo_mode"
+            android:name="com.adriangl.devquicktiles.tiles.demomode.DemoModeTileService"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:icon="@drawable/ic_qs_animator_duration_enabled"
+            android:label="@string/qs_animator_duration"
+            android:name="com.adriangl.devquicktiles.tiles.animatorduration.AnimatorDurationTileService"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

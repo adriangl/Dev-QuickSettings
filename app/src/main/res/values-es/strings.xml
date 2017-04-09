@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Adrián García
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_description">La aplicación instala los siguientes mosaicos de Quick Settings:</string>
+    <string name="qs_demo_mode">Modo de demostración</string>
+    <string name="qs_finish_activities">Destruir actividades</string>
+    <string name="qs_keep_screen_on">Pantalla activa</string>
+    <string name="qs_usb_debugging">Depuración por USB</string>
+    <string name="qs_animator_duration">Escala de duración de animación</string>
+    <string name="qs_animator_off">Sin animación</string>
+    <string name="qs_animator_scale_0_5x">Escala de animación 0.5x</string>
+    <string name="qs_animator_scale_1x">Escala de animación 1x</string>
+    <string name="qs_animator_scale_1_5x">Escala de animación 1.5x</string>
+    <string name="qs_animator_scale_2x">Escala de animación 2x</string>
+    <string name="qs_animator_scale_5x">Escala de animación 5x</string>
+    <string name="qs_animator_scale_10x">Escala de animación 10x</string>
+    <string name="qs_animator_duration_description">Permite cambiar entre distintas escalas de duración de animación, entre 0,5x a 10x la escala por defecto.</string>
+    <string name="qs_finish_activities_description">Permite destruir actividades cuando el usuario sale de las mismas.</string>
+    <string name="qs_keep_screen_on_description">Permite mantener la pantalla activa cuando el dispositivo está conectado a través de USB o a la corriente eléctrica.</string>
+    <string name="qs_usb_debugging_description">Permite habilitar la depuración por USB del dispositivo.</string>
+    <string name="qs_demo_mode_description">Permite habilitar el modo de demostración del dispositivo.</string>
+    <string name="share_permissions_subject">Habilitar permisos para %s</string>
+    <string name="share_using">Compartir con</string>
+    <string name="qs_permissions_not_granted">Necesitas dar permisos a la aplicación para escribir en ajustes seguros. Mira las instrucciones en la pantalla principal.</string>
+    <string name="menu_about">Acerca de…</string>
+    <string name="main_permissions_not_granted_description">Para poder usar los mosaicos, debes conceder a la aplicación los siguientes permisos vía ADB:</string>
+    <string name="main_permissions_not_granted_title">No se han concedido permisos a la aplicación</string>
+    <string name="share_permissions">Compartir</string>
+</resources>
