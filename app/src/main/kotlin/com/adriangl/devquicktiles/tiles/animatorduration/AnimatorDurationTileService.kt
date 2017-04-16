@@ -17,6 +17,7 @@
 package com.adriangl.devquicktiles.tiles.animatorduration
 
 import android.graphics.drawable.Icon
+import android.net.Uri
 import android.provider.Settings
 import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
@@ -25,6 +26,10 @@ import com.adriangl.devquicktiles.utils.SettingsUtils
 class AnimatorDurationTileService : DevelopmentTileService<Float>() {
     companion object {
         val SETTING = Settings.Global.ANIMATOR_DURATION_SCALE
+    }
+
+    override fun getSettingsUri(): List<Uri> {
+        return listOf(Settings.Global.getUriFor(SETTING))
     }
 
     override fun isActive(value: Float): Boolean {

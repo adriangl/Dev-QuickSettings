@@ -17,6 +17,7 @@
 package com.adriangl.devquicktiles.tiles.usbdebug
 
 import android.graphics.drawable.Icon
+import android.net.Uri
 import android.provider.Settings
 import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
@@ -25,6 +26,10 @@ import com.adriangl.devquicktiles.utils.SettingsUtils
 class UsbDebuggingTileService : DevelopmentTileService<Int>() {
     companion object {
         val SETTING = Settings.Global.ADB_ENABLED
+    }
+
+    override fun getSettingsUri(): List<Uri> {
+        return listOf(Settings.Global.getUriFor(SETTING))
     }
 
     override fun isActive(value: Int): Boolean {
@@ -37,7 +42,7 @@ class UsbDebuggingTileService : DevelopmentTileService<Int>() {
         return value
     }
 
-    override fun saveValue(value: Int) : Boolean {
+    override fun saveValue(value: Int): Boolean {
         return SettingsUtils.setIntToGlobalSettings(contentResolver, SETTING, value)
     }
 

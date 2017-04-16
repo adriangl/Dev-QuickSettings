@@ -17,6 +17,7 @@
 package com.adriangl.devquicktiles.tiles.screenon
 
 import android.graphics.drawable.Icon
+import android.net.Uri
 import android.os.BatteryManager
 import android.provider.Settings
 import com.adriangl.devquicktiles.R
@@ -26,6 +27,10 @@ import com.adriangl.devquicktiles.utils.SettingsUtils
 class KeepScreenOnTileService : DevelopmentTileService<Int>() {
     companion object {
         val SETTING = Settings.Global.STAY_ON_WHILE_PLUGGED_IN
+    }
+
+    override fun getSettingsUri(): List<Uri> {
+        return listOf(Settings.Global.getUriFor(SETTING))
     }
 
     override fun isActive(value: Int): Boolean {

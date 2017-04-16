@@ -17,7 +17,9 @@
 package com.adriangl.devquicktiles.tiles.demomode
 
 import android.graphics.drawable.Icon
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 import com.adriangl.devquicktiles.utils.SettingsUtils
@@ -29,6 +31,12 @@ import com.adriangl.devquicktiles.utils.SettingsUtils
  * Check protocol here: https://github.com/android/platform_frameworks_base/blob/master/packages/SystemUI/docs/demo_mode.md
  */
 class DemoModeTileService : DevelopmentTileService<Int>() {
+
+    override fun getSettingsUri(): List<Uri> {
+        return listOf(
+                Settings.Global.getUriFor(DemoMode.DEMO_MODE_ALLOWED),
+                Settings.Global.getUriFor(DemoMode.DEMO_MODE_ON))
+    }
 
     override fun isActive(value: Int): Boolean {
         return value != 0
@@ -47,7 +55,8 @@ class DemoModeTileService : DevelopmentTileService<Int>() {
         val isSettingEnabled =
                 listOf(DemoMode.DEMO_MODE_ALLOWED, DemoMode.DEMO_MODE_ON)
                         .fold(true) {
-                            initial, setting -> initial && SettingsUtils.setIntToGlobalSettings(contentResolver, setting, value)
+                            initial, setting ->
+                            initial && SettingsUtils.setIntToGlobalSettings(contentResolver, setting, value)
                         }
         if (isSettingEnabled) {
             if (value != 0) {

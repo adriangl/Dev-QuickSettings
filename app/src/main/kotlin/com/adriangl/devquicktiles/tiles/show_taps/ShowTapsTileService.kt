@@ -17,6 +17,8 @@
 package com.adriangl.devquicktiles.tiles.show_taps
 
 import android.graphics.drawable.Icon
+import android.net.Uri
+import android.provider.Settings
 import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 import com.adriangl.devquicktiles.utils.SettingsUtils
@@ -25,6 +27,10 @@ import com.adriangl.devquicktiles.utils.SettingsUtils
 class ShowTapsTileService : DevelopmentTileService<Int>() {
     companion object {
         val SETTING = "show_touches" // This is hidden for developers, so we use the string resource
+    }
+
+    override fun getSettingsUri(): List<Uri> {
+        return listOf(Settings.System.getUriFor(SETTING))
     }
 
     override fun isActive(value: Int): Boolean {
