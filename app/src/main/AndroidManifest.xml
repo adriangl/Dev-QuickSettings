@@ -12,8 +12,7 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  -->
-
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.adriangl.devquicktiles">
@@ -50,71 +49,66 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <service
             android:icon="@drawable/ic_qs_usb_debugging_enabled"
             android:label="@string/qs_usb_debugging"
-            android:name="com.adriangl.devquicktiles.tiles.usbdebug.UsbDebuggingTileService"
+            android:name=".tiles.usbdebug.UsbDebuggingTileService"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
-
         <service
             android:icon="@drawable/ic_qs_finish_activities_enabled"
             android:label="@string/qs_finish_activities"
-            android:name="com.adriangl.devquicktiles.tiles.finishactivities.FinishActivitiesTileService"
+            android:name=".tiles.finishactivities.FinishActivitiesTileService"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
-
         <service
             android:icon="@drawable/ic_qs_keep_screen_on_enabled"
             android:label="@string/qs_keep_screen_on"
-            android:name="com.adriangl.devquicktiles.tiles.screenon.KeepScreenOnTileService"
+            android:name=".tiles.screenon.KeepScreenOnTileService"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
-
         <service
             android:icon="@drawable/ic_qs_demo_mode_enabled"
             android:label="@string/qs_demo_mode"
-            android:name="com.adriangl.devquicktiles.tiles.demomode.DemoModeTileService"
+            android:name=".tiles.demomode.DemoModeTileService"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
-
         <service
             android:icon="@drawable/ic_qs_animator_duration_enabled"
             android:label="@string/qs_animator_duration"
-            android:name="com.adriangl.devquicktiles.tiles.animatorduration.AnimatorDurationTileService"
+            android:name=".tiles.animatorduration.AnimatorDurationTileService"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
-
         <service
             android:icon="@drawable/ic_qs_show_taps_enabled"
             android:label="@string/qs_show_taps"
-            android:name="com.adriangl.devquicktiles.tiles.show_taps.ShowTapsTileService"
+            android:name=".tiles.show_taps.ShowTapsTileService"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

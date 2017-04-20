@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Adrián García
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +14,17 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/menu_about"
-        android:title="@string/menu_about"
-        app:showAsAction="never" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:icon="@drawable/ic_drawer_settings"
+            android:id="@+id/nav_settings"
+            android:title="Settings" />
+        <item
+            android:icon="@drawable/ic_drawer_about"
+            android:id="@+id/nav_about"
+            android:title="About" />
+    </group>
+
 </menu>
