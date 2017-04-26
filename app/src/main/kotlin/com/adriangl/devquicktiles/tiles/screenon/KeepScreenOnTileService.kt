@@ -18,7 +18,7 @@ package com.adriangl.devquicktiles.tiles.screenon
 
 import android.graphics.drawable.Icon
 import android.net.Uri
-import android.os.BatteryManager
+import android.preference.PreferenceManager
 import android.provider.Settings
 import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
@@ -41,13 +41,14 @@ class KeepScreenOnTileService : DevelopmentTileService<Int>() {
         return SettingsUtils.getIntFromGlobalSettings(contentResolver, SETTING)
     }
 
-    override fun saveValue(value: Int) : Boolean {
+    override fun saveValue(value: Int): Boolean {
         return SettingsUtils.setIntToGlobalSettings(contentResolver, SETTING, value)
     }
 
     override fun getValueList(): List<Int> {
-        //TODO: Get the proper value from settings so the user can change its value
-        return listOf(0, BatteryManager.BATTERY_PLUGGED_AC or BatteryManager.BATTERY_PLUGGED_USB)
+        val savedValue = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                .getString(getString(R.string.pref_keep_screen_on_key), getString(R.string.pref_keep_screen_on_mode_any_value)))
+        return listOf(0, savedValue)
     }
 
     override fun getIcon(value: Int): Icon? {

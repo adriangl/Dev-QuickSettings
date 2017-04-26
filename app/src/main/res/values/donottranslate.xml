@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Adrián García
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +15,27 @@
   -->
 
 <resources>
-    <string name="app_name" translatable="false">Dev QuickSettings</string>
-    <string name="permissions_to_grant" translatable="false">adb shell pm grant %1$s android.permission.WRITE_SECURE_SETTINGS\n\nadb shell pm grant %1$s android.permission.DUMP</string>
+    <string name="app_name">Dev QuickSettings</string>
+
+    <string name="permissions_to_grant">adb shell pm grant %1$s android.permission.WRITE_SECURE_SETTINGS\n\nadb shell pm grant %1$s android.permission.DUMP</string>
+
+    <!-- String values related to settings -->
+    <string name="pref_keep_screen_on_key">keep_screen_on</string>
+    <string name="pref_keep_screen_on_mode_ac_adapter_value">1</string>
+    <string name="pref_keep_screen_on_mode_usb_port_value">2</string>
+    <string name="pref_keep_screen_on_mode_wireless_value">4</string>
+    <string name="pref_keep_screen_on_mode_any_value">7</string>
+    <string-array name="pref_keep_screen_on_titles">
+        <item>@string/pref_keep_screen_on_mode_ac_adapter</item>
+        <item>@string/pref_keep_screen_on_mode_usb_port</item>
+        <item>@string/pref_keep_screen_on_mode_wireless</item>
+        <item>@string/pref_keep_screen_on_mode_any</item>
+    </string-array>
+    <string-array name="pref_keep_screen_on_values">
+        <item>@string/pref_keep_screen_on_mode_ac_adapter_value</item> <!-- BatteryManager.BATTERY_PLUGGED_AC -->
+        <item>@string/pref_keep_screen_on_mode_usb_port_value</item> <!-- BatteryManager.BATTERY_PLUGGED_USB -->
+        <item>@string/pref_keep_screen_on_mode_wireless_value</item> <!-- BatteryManager.BATTERY_PLUGGED_WIRELESS -->
+        <item>@string/pref_keep_screen_on_mode_any_value</item> <!-- BatteryManager.BATTERY_ANY -->
+    </string-array>
+
 </resources>

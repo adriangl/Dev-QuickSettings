@@ -32,6 +32,7 @@ import android.widget.Button
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.adriangl.devquicktiles.settings.TileSettingsActivity
 import com.adriangl.devquicktiles.tiles.views.QsDescriptionsItem
 import com.adriangl.devquicktiles.tiles.views.QsDescriptionsRecyclerViewAdapter
 import com.adriangl.devquicktiles.utils.PermissionUtils
@@ -156,7 +157,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun showSettings() {
-
+        val intent = Intent(this, TileSettingsActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showAbout() {

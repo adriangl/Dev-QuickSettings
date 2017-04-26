@@ -58,8 +58,10 @@ abstract class DevelopmentTileService<T : Any> : TileService() {
 
     private fun setNextValue() {
         val value = queryValue()
-        val newIndex = ((getValueList().indexOf(value) + 1) % getValueList().size)
-        val newValue = getValueList()[newIndex]
+        val valueList = getValueList()
+
+        val newIndex = ((valueList.indexOf(value) + 1) % valueList.size)
+        val newValue = valueList[newIndex]
         Timber.d("New value: %s, Tile: {label=%s, state=%s}", value, qsTile.label, qsTile.state)
 
         // Disable tile while setting the value
