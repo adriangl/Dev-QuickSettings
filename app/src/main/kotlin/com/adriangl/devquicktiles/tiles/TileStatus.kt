@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.adriangl.devquicktiles.tiles.demomode
+package com.adriangl.devquicktiles.tiles
 
-import com.adriangl.devquicktiles.tiles.DevelopmentTileService
-
-class DemoModeTileService : DevelopmentTileService()
+/**
+ * Class that contains the current tile state.
+ */
+data class TileStatus(val added: Boolean, val state: Int, val value: Int)

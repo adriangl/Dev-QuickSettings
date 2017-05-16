@@ -24,39 +24,25 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.adriangl.devquicktiles.settings.TileSettingsActivity
 import com.adriangl.devquicktiles.tiles.views.QsDescriptionsItem
 import com.adriangl.devquicktiles.tiles.views.QsDescriptionsRecyclerViewAdapter
 import com.adriangl.devquicktiles.utils.PermissionUtils
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
+import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.grant_permissions_dialog.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.qs_tile_descriptions_recyclerview)
-    lateinit var qsDescriptionsRecyclerView: RecyclerView
-    @BindView(R.id.grant_permissions_container)
-    lateinit var grantPermissionsView: View
-    @BindView(R.id.grant_permissions_text)
-    lateinit var grantPermissionsText: TextView
-    @BindView(R.id.permissions_share)
-    lateinit var permissionsShareButton: Button
-
-    private lateinit var drawer : DrawerLayout
+    private lateinit var drawer: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        ButterKnife.bind(this)
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
@@ -70,23 +56,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
-        permissionsShareButton.setOnClickListener { sharePermissions() }
+        permissions_share.setOnClickListener { sharePermissions() }
     }
 
     override fun onResume() {
         super.onResume()
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        qsDescriptionsRecyclerView.setHasFixedSize(true)
-        qsDescriptionsRecyclerView.isNestedScrollingEnabled = false
-        qsDescriptionsRecyclerView.layoutManager = layoutManager
+        qs_tile_descriptions_recyclerview.setHasFixedSize(true)
+        qs_tile_descriptions_recyclerview.isNestedScrollingEnabled = false
+        qs_tile_descriptions_recyclerview.layoutManager = layoutManager
 
         val adapter = QsDescriptionsRecyclerViewAdapter()
         adapter.setItems(getDescriptionItems())
-        qsDescriptionsRecyclerView.adapter = adapter
+        qs_tile_descriptions_recyclerview.adapter = adapter
 
-        grantPermissionsText.text = getFormattedPermissions()
+        grant_permissions_text.text = getFormattedPermissions()
 
-        if (hasNeededPermissions()) grantPermissionsView.visibility = View.GONE
+        if (hasNeededPermissions()) grant_permissions_container.visibility = View.GONE
     }
 
     override fun onBackPressed() {

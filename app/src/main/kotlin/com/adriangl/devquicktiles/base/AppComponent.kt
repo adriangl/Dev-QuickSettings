@@ -14,8 +14,19 @@
  * limitations under the License.
  */
 
-package com.adriangl.devquicktiles.tiles.demomode
+package com.adriangl.devquicktiles.base
 
+import com.adriangl.devquicktiles.tiles.DevelopmentSettingDelegate
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
+import dagger.Component
 
-class DemoModeTileService : DevelopmentTileService()
+/**
+ * Dagger main component.
+ */
+@AppScope
+@Component(modules = arrayOf(App.AppModule::class, DevelopmentSettingDelegate.DevelopmentSettingDelegateModule::class))
+interface AppComponent {
+    fun settingsDelegateMap(): Map<Class<*>, DevelopmentSettingDelegate>;
+
+    fun inject(developmentTileService: DevelopmentTileService)
+}

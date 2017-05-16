@@ -21,28 +21,20 @@ import android.provider.Settings
 
 class SettingsUtils {
     companion object {
-        fun getIntFromGlobalSettings(contentResolver: ContentResolver, key: String): Int {
-            return Settings.Global.getInt(contentResolver, key, 0)
+        fun getStringFromGlobalSettings(contentResolver: ContentResolver, key: String): String {
+            return Settings.Global.getString(contentResolver, key)
         }
 
-        fun setIntToGlobalSettings(contentResolver: ContentResolver, key: String, value: Int): Boolean {
-            return Settings.Global.putInt(contentResolver, key, value)
+        fun setStringToGlobalSettings(contentResolver: ContentResolver, key: String, value: String): Boolean {
+            return Settings.Global.putString(contentResolver, key, value)
         }
 
-        fun getFloatFromGlobalSettings(contentResolver: ContentResolver, key: String): Float {
-            return Settings.Global.getFloat(contentResolver, key, 0f)
+        fun getStringFromSystemSettings(contentResolver: ContentResolver, key: String): String {
+            return Settings.System.getString(contentResolver, key)
         }
 
-        fun setFloatToGlobalSettings(contentResolver: ContentResolver, key: String, value: Float): Boolean {
-            return Settings.Global.putFloat(contentResolver, key, value)
-        }
-
-        fun getIntFromSystemSettings(contentResolver: ContentResolver, key: String): Int {
-            return Settings.System.getInt(contentResolver, key, 0)
-        }
-
-        fun setIntToSystemSettings(contentResolver: ContentResolver, key: String, value: Int): Boolean {
-            return Settings.System.putInt(contentResolver, key, value)
+        fun setStringToSystemSettings(contentResolver: ContentResolver, key: String, value: String): Boolean {
+            return Settings.System.putString(contentResolver, key, value)
         }
     }
 }

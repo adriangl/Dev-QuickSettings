@@ -14,8 +14,14 @@
  * limitations under the License.
  */
 
-package com.adriangl.devquicktiles.tiles.demomode
+package com.adriangl.devquicktiles.base
 
-import com.adriangl.devquicktiles.tiles.DevelopmentTileService
+import javax.inject.Scope
 
-class DemoModeTileService : DevelopmentTileService()
+
+/**
+ * Created by adrian-macbook on 16/5/17.
+ */
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class AppScope

@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.adriangl.devquicktiles.base
+package com.adriangl.devquicktiles.tiles
 
-import android.app.Application
-import com.adriangl.devquicktiles.BuildConfig
-import timber.log.Timber
+import kotlin.reflect.KClass
 
-class BaseApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-
-        // Init Timber in debug builds
-        if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
-    }
+/**
+ * Interface used to keep track of the tiles' current status along the app.
+ */
+interface TileStatusController {
+    /**
+     *
+     */
+    fun setTileStatus(tileClass: KClass<Any>, tileStatus: TileStatus)
+    fun getTileStatus(tileClass: KClass<Any>): TileStatus?
 }

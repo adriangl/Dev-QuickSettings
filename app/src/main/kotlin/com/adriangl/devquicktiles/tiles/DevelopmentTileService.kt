@@ -16,17 +16,21 @@
 
 package com.adriangl.devquicktiles.tiles
 
-import android.database.ContentObserver;
-import android.graphics.drawable.Icon
+import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.widget.Toast
 import com.adriangl.devquicktiles.R
+import com.adriangl.devquicktiles.base.App
 import timber.log.Timber
+import javax.inject.Inject
 
-abstract class DevelopmentTileService<T : Any> : TileService() {
+abstract class DevelopmentTileService : TileService() {
+
+    @Inject lateinit var tileStatusController: TileStatusController
+    lateinit var delegate: DevelopmentSettingDelegate
 
     private val contentObserver = object : ContentObserver(Handler()) {
         override fun onChange(selfChange: Boolean, uri: Uri) {
@@ -35,10 +39,17 @@ abstract class DevelopmentTileService<T : Any> : TileService() {
         }
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        // Inject Dagger data
+        App.component.inject(this)
+        delegate = App.component.settingsDelegateMap()[this.javaClass]!!
+    }
+
     override fun onStartListening() {
         Timber.d("Tile started listening: {label=%s, state=%s}", qsTile.label, qsTile.state)
 
-        getSettingsUri().forEach { uri ->
+        delegate.getSettingsUri().forEach { uri ->
             Timber.d("Registering content observer for tile: {label=%s} with uri %s", qsTile.label, uri)
             contentResolver.registerContentObserver(uri, false, contentObserver)
         }
@@ -57,19 +68,23 @@ abstract class DevelopmentTileService<T : Any> : TileService() {
     }
 
     private fun setNextValue() {
-        val value = queryValue()
-        val valueList = getValueList()
+        val value = delegate.queryValue()
+        val valueList = delegate.getValueList()
 
         val newIndex = ((valueList.indexOf(value) + 1) % valueList.size)
         val newValue = valueList[newIndex]
-        Timber.d("New value: %s, Tile: {label=%s, state=%s}", value, qsTile.label, qsTile.state)
+        Timber.d("New value: %s for tile: {label=%s, state=%s, value=%s}",
+                newValue,
+                qsTile.label,
+                qsTile.state,
+                value)
 
         // Disable tile while setting the value
         qsTile.state = Tile.STATE_UNAVAILABLE
         qsTile.updateTile()
 
         try {
-            if (saveValue(newValue)) {
+            if (delegate.saveValue(newValue)) {
                 Timber.d("Tile value saved: {label=%s, value=%s}", qsTile.label, newValue)
                 // New value change should arrive via content observer, so no need to update the tile
                 // here
@@ -86,29 +101,14 @@ abstract class DevelopmentTileService<T : Any> : TileService() {
     }
 
     private fun updateState() {
-        val value = queryValue()
+        val value = delegate.queryValue()
 
-        qsTile.state = if (isActive(value)) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-        qsTile.label = getLabel(value)
-        qsTile.icon = getIcon(value)
+        qsTile.state = if (delegate.isActive(value)) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+        qsTile.label = delegate.getLabel(value)
+        qsTile.icon = delegate.getIcon(value)
 
         qsTile.updateTile()
 
         Timber.d("Tile updated: {label=%s, state=%s, value=%s}", qsTile.label, qsTile.state, value)
     }
-
-    abstract fun isActive(value: T): Boolean
-
-    abstract fun getValueList(): List<T>
-
-    abstract fun queryValue(): T
-
-    abstract fun saveValue(value: T): Boolean
-
-    abstract fun getIcon(value: T): Icon?
-
-    abstract fun getLabel(value: T): CharSequence?
-
-    abstract fun getSettingsUri(): List<Uri>
-
 }
