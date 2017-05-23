@@ -24,9 +24,11 @@ import dagger.Component
  * Dagger main component.
  */
 @AppScope
-@Component(modules = arrayOf(App.AppModule::class, DevelopmentSettingDelegate.DevelopmentSettingDelegateModule::class))
+@Component(modules = arrayOf(
+        App.AppModule::class,
+        DevelopmentSettingDelegate.DevelopmentSettingDelegateModule::class))
 interface AppComponent {
-    fun settingsDelegateMap(): Map<Class<*>, DevelopmentSettingDelegate>;
+    fun settingsDelegateMap(): Map<Class<*>, DevelopmentSettingDelegate>
 
     fun inject(developmentTileService: DevelopmentTileService)
 }

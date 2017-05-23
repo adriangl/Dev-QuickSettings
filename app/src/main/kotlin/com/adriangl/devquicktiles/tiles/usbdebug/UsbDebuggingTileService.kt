@@ -16,46 +16,6 @@
 
 package com.adriangl.devquicktiles.tiles.usbdebug
 
-import android.graphics.drawable.Icon
-import android.net.Uri
-import android.provider.Settings
-import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
-import com.adriangl.devquicktiles.utils.SettingsUtils
 
-class UsbDebuggingTileService : DevelopmentTileService<Int>() {
-    companion object {
-        val SETTING = Settings.Global.ADB_ENABLED
-    }
-
-    override fun getSettingsUri(): List<Uri> {
-        return listOf(Settings.Global.getUriFor(SETTING))
-    }
-
-    override fun isActive(value: Int): Boolean {
-        return value != 0
-    }
-
-    override fun queryValue(): Int {
-        var value = SettingsUtils.getIntFromGlobalSettings(contentResolver, SETTING)
-        if (value > 1) value = 1
-        return value
-    }
-
-    override fun saveValue(value: Int): Boolean {
-        return SettingsUtils.setIntToGlobalSettings(contentResolver, SETTING, value)
-    }
-
-    override fun getValueList(): List<Int> {
-        return listOf(0, 1)
-    }
-
-    override fun getIcon(value: Int): Icon? {
-        return Icon.createWithResource(applicationContext,
-                if (value != 0) R.drawable.ic_qs_usb_debugging_enabled else R.drawable.ic_qs_usb_debugging_disabled)
-    }
-
-    override fun getLabel(value: Int): CharSequence? {
-        return getString(R.string.qs_usb_debugging)
-    }
-}
+class UsbDebuggingTileService : DevelopmentTileService()

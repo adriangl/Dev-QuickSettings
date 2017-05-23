@@ -16,48 +16,6 @@
 
 package com.adriangl.devquicktiles.tiles.screenon
 
-import android.graphics.drawable.Icon
-import android.net.Uri
-import android.preference.PreferenceManager
-import android.provider.Settings
-import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
-import com.adriangl.devquicktiles.utils.SettingsUtils
 
-class KeepScreenOnTileService : DevelopmentTileService<Int>() {
-    companion object {
-        val SETTING = Settings.Global.STAY_ON_WHILE_PLUGGED_IN
-    }
-
-    override fun getSettingsUri(): List<Uri> {
-        return listOf(Settings.Global.getUriFor(SETTING))
-    }
-
-    override fun isActive(value: Int): Boolean {
-        return value != 0
-    }
-
-    override fun queryValue(): Int {
-        return SettingsUtils.getIntFromGlobalSettings(contentResolver, SETTING)
-    }
-
-    override fun saveValue(value: Int): Boolean {
-        return SettingsUtils.setIntToGlobalSettings(contentResolver, SETTING, value)
-    }
-
-    override fun getValueList(): List<Int> {
-        val savedValue = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(applicationContext)
-                .getString(getString(R.string.pref_keep_screen_on_key), getString(R.string.pref_keep_screen_on_mode_any_value)))
-        return listOf(0, savedValue)
-    }
-
-    override fun getIcon(value: Int): Icon? {
-        return Icon.createWithResource(applicationContext,
-                if (value != 0) R.drawable.ic_qs_keep_screen_on_enabled else R.drawable.ic_qs_keep_screen_on_disabled)
-    }
-
-    override fun getLabel(value: Int): CharSequence? {
-        return getString(R.string.qs_keep_screen_on)
-    }
-
-}
+class KeepScreenOnTileService : DevelopmentTileService()

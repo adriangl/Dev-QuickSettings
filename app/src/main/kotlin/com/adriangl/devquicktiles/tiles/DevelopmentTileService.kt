@@ -46,6 +46,16 @@ abstract class DevelopmentTileService : TileService() {
         delegate = App.component.settingsDelegateMap()[this.javaClass]!!
     }
 
+    override fun onTileAdded() {
+        super.onTileAdded()
+        tileStatusController.setTileStatus(this::class, TileStatus(true, qsTile.state, delegate.queryValue()))
+    }
+
+    override fun onTileRemoved() {
+        super.onTileRemoved()
+        tileStatusController.setTileStatus(this::class, TileStatus(false, qsTile.state, delegate.queryValue()))
+    }
+
     override fun onStartListening() {
         Timber.d("Tile started listening: {label=%s, state=%s}", qsTile.label, qsTile.state)
 
@@ -55,11 +65,13 @@ abstract class DevelopmentTileService : TileService() {
         }
 
         updateState()
+        tileStatusController.setTileStatus(this::class, TileStatus(true, qsTile.state, delegate.queryValue()))
     }
 
     override fun onStopListening() {
         Timber.d("Unregistering content observer for tile: {label=%s}", qsTile.label)
         contentResolver.unregisterContentObserver(contentObserver)
+        tileStatusController.setTileStatus(this::class, TileStatus(true, qsTile.state, delegate.queryValue()))
     }
 
     override fun onClick() {
@@ -110,5 +122,6 @@ abstract class DevelopmentTileService : TileService() {
         qsTile.updateTile()
 
         Timber.d("Tile updated: {label=%s, state=%s, value=%s}", qsTile.label, qsTile.state, value)
+        tileStatusController.setTileStatus(this::class, TileStatus(true, qsTile.state, delegate.queryValue()))
     }
 }

@@ -19,4 +19,4 @@ package com.adriangl.devquicktiles.tiles
 /**
  * Class that contains the current tile state.
  */
-data class TileStatus(val added: Boolean, val state: Int, val value: Int)
+data class TileStatus(val added: Boolean, val state: Int, val value: String)

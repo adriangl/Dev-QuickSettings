@@ -21,7 +21,7 @@ apply from: "$rootDir/common.gradle"
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.adriangl.devquicksettings"
         minSdkVersion 24
@@ -56,6 +56,7 @@ dependencies {
         transitive = true
     }
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     compile 'com.jakewharton.timber:timber:4.5.1'
 

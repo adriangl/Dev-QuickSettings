@@ -24,41 +24,40 @@ import kotlin.reflect.KClass
 
 @AppScope
 class TileStatusControllerImpl @Inject constructor(val context: Context) : TileStatusController {
-    val sharedPreferencesInstance = PreferenceManager.getDefaultSharedPreferences(context)
-    var tileStatusMap: HashMap<KClass<Any>, TileStatus> = hashMapOf()
-
-    init {
-        tileStatusMap = unflattenStatusFromDisk()
+    val sharedPreferencesInstance = PreferenceManager.getDefaultSharedPreferences(context)!!
+    val tileStatusMap: HashMap<KClass<out DevelopmentTileService>, TileStatus> by lazy {
+        unflattenStatusFromDisk()
     }
 
-    override fun setTileStatus(tileClass: KClass<Any>, tileStatus: TileStatus) {
+    override fun setTileStatus(tileClass: KClass<out DevelopmentTileService>, tileStatus: TileStatus) {
         // Save to memory map
         tileStatusMap[tileClass] = tileStatus
         // Save map to disk
         flattenStatusToDisk(tileStatusMap)
     }
 
-    override fun getTileStatus(tileClass: KClass<Any>): TileStatus? {
+    override fun getTileStatus(tileClass: KClass<out DevelopmentTileService>): TileStatus? {
         return tileStatusMap[tileClass]
     }
 
-    private fun unflattenStatusFromDisk(): HashMap<KClass<Any>, TileStatus> {
-        val tileStatusMap = hashMapOf<KClass<Any>, TileStatus>()
+    @Suppress("UNCHECKED_CAST")
+    private fun unflattenStatusFromDisk(): HashMap<KClass<out DevelopmentTileService>, TileStatus> {
+        val tileStatusMap = hashMapOf<KClass<out DevelopmentTileService>, TileStatus>()
         val string = sharedPreferencesInstance.getString("tile_status", null)
         string?.split("|")?.forEach { flattenedStatus ->
             val splitStatus = flattenedStatus.split(":")
             tileStatusMap.put(
-                    Class.forName(splitStatus[0]).kotlin as KClass<Any>,
+                    Class.forName(splitStatus[0]).kotlin as KClass<out DevelopmentTileService>,
                     TileStatus(
                             splitStatus[1].toBoolean(),
                             splitStatus[2].toInt(),
-                            splitStatus[3].toInt()))
+                            splitStatus[3]))
             return@forEach
         }
         return tileStatusMap
     }
 
-    private fun flattenStatusToDisk(tileStatusMap: HashMap<KClass<Any>, TileStatus>) {
+    private fun flattenStatusToDisk(tileStatusMap: HashMap<KClass<out DevelopmentTileService>, TileStatus>) {
         val statusString = tileStatusMap.entries.map { (clazz, status) ->
             "%s:%s:%s:%s".format(clazz.qualifiedName, status.added, status.state, status.value)
         }.joinToString("|")

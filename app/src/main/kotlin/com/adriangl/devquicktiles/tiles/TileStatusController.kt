@@ -25,6 +25,7 @@ interface TileStatusController {
     /**
      *
      */
-    fun setTileStatus(tileClass: KClass<Any>, tileStatus: TileStatus)
-    fun getTileStatus(tileClass: KClass<Any>): TileStatus?
+    fun setTileStatus(tileClass: KClass<out DevelopmentTileService>, tileStatus: TileStatus)
+
+    fun getTileStatus(tileClass: KClass<out DevelopmentTileService>): TileStatus?
 }

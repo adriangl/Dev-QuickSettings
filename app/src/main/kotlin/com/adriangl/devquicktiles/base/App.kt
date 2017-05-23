@@ -28,13 +28,16 @@ import timber.log.Timber
 
 class App : Application() {
     companion object {
-        val component: AppComponent by lazy {
-            DaggerAppComponent.builder().build()
-        }
+        lateinit var component: AppComponent
+            private set
     }
 
     override fun onCreate() {
         super.onCreate()
+
+        component = DaggerAppComponent.builder()
+                .appModule(AppModule(this))
+                .build()
 
         // Init Timber in debug builds
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())

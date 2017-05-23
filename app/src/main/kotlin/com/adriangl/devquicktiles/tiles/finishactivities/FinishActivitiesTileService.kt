@@ -16,47 +16,6 @@
 
 package com.adriangl.devquicktiles.tiles.finishactivities
 
-import android.graphics.drawable.Icon
-import android.net.Uri
-import android.provider.Settings
-import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
-import com.adriangl.devquicktiles.utils.SettingsUtils
 
-class FinishActivitiesTileService : DevelopmentTileService<Int>() {
-    companion object {
-        val SETTING = Settings.Global.ALWAYS_FINISH_ACTIVITIES
-    }
-
-    override fun getSettingsUri(): List<Uri> {
-        return listOf(Settings.Global.getUriFor(SETTING))
-    }
-
-    override fun isActive(value: Int): Boolean {
-        return value != 0
-    }
-
-    override fun queryValue(): Int {
-        var value = SettingsUtils.getIntFromGlobalSettings(contentResolver, SETTING)
-        if (value > 1) value = 1
-        return value
-    }
-
-    override fun saveValue(value: Int) : Boolean {
-        return SettingsUtils.setIntToGlobalSettings(contentResolver, SETTING, value)
-    }
-
-    override fun getValueList(): List<Int> {
-        return listOf(0, 1)
-    }
-
-    override fun getIcon(value: Int): Icon? {
-        return Icon.createWithResource(applicationContext,
-                if (value != 0) R.drawable.ic_qs_finish_activities_enabled
-                else R.drawable.ic_qs_finish_activities_disabled)
-    }
-
-    override fun getLabel(value: Int): CharSequence? {
-        return getString(R.string.qs_finish_activities)
-    }
-}
+class FinishActivitiesTileService : DevelopmentTileService()

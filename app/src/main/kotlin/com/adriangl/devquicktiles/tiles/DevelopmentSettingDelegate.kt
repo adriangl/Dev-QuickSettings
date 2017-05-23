@@ -24,6 +24,10 @@ import com.adriangl.devquicktiles.tiles.animatorduration.AnimatorDurationSetting
 import com.adriangl.devquicktiles.tiles.animatorduration.AnimatorDurationTileService
 import com.adriangl.devquicktiles.tiles.demomode.DemoModeSettingDelegate
 import com.adriangl.devquicktiles.tiles.demomode.DemoModeTileService
+import com.adriangl.devquicktiles.tiles.finishactivities.*
+import com.adriangl.devquicktiles.tiles.screenon.KeepScreenOnTileService
+import com.adriangl.devquicktiles.tiles.show_taps.ShowTapsTileService
+import com.adriangl.devquicktiles.tiles.usbdebug.UsbDebuggingTileService
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.ClassKey
@@ -55,5 +59,17 @@ abstract class DevelopmentSettingDelegate constructor(val context: Context,
 
         @Binds @ClassKey(DemoModeTileService::class) @IntoMap
         abstract fun provideDemoModeSettingDelegate(delegate: DemoModeSettingDelegate): DevelopmentSettingDelegate
+
+        @Binds @ClassKey(FinishActivitiesTileService::class) @IntoMap
+        abstract fun provideFinishActivitiesSettingDelegate(delegate: FinishActivitiesSettingDelegate): DevelopmentSettingDelegate
+
+        @Binds @ClassKey(KeepScreenOnTileService::class) @IntoMap
+        abstract fun provideKeepScreenOnSettingDelegate(delegate: KeepScreenOnSettingDelegate): DevelopmentSettingDelegate
+
+        @Binds @ClassKey(ShowTapsTileService::class) @IntoMap
+        abstract fun provideShowTapsSettingDelegate(delegate: ShowTapsSettingDelegate): DevelopmentSettingDelegate
+
+        @Binds @ClassKey(UsbDebuggingTileService::class) @IntoMap
+        abstract fun provideUsbDebuggingSettingDelegate(delegate: UsbDebuggingSettingDelegate): DevelopmentSettingDelegate
     }
 }
