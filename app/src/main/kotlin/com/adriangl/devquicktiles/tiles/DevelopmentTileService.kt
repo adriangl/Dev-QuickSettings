@@ -60,7 +60,7 @@ abstract class DevelopmentTileService : TileService() {
         Timber.d("Tile started listening: {label=%s, state=%s}", qsTile.label, qsTile.state)
 
         delegate.getSettingsUri().forEach { uri ->
-            Timber.d("Registering content observer for tile: {label=%s} with uri %s", qsTile.label, uri)
+            Timber.d("Registering content observer for tile: {label=%s, state=%s} with uri %s", qsTile.label, qsTile.state, uri)
             contentResolver.registerContentObserver(uri, false, contentObserver)
         }
 
@@ -69,7 +69,7 @@ abstract class DevelopmentTileService : TileService() {
     }
 
     override fun onStopListening() {
-        Timber.d("Unregistering content observer for tile: {label=%s}", qsTile.label)
+        Timber.d("Unregistering content observer for tile: {label=%s, state=%s}", qsTile.label, qsTile.state)
         contentResolver.unregisterContentObserver(contentObserver)
         tileStatusController.setTileStatus(this::class, TileStatus(true, qsTile.state, delegate.queryValue()))
     }

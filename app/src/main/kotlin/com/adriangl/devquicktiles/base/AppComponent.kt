@@ -16,6 +16,7 @@
 
 package com.adriangl.devquicktiles.base
 
+import com.adriangl.devquicktiles.settings.KeepScreenOnPreferenceFragment
 import com.adriangl.devquicktiles.tiles.DevelopmentSettingDelegate
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 import dagger.Component
@@ -30,5 +31,7 @@ import dagger.Component
 interface AppComponent {
     fun settingsDelegateMap(): Map<Class<*>, DevelopmentSettingDelegate>
 
-    fun inject(developmentTileService: DevelopmentTileService)
+    fun inject(into: DevelopmentTileService)
+
+    fun inject(into: KeepScreenOnPreferenceFragment)
 }
