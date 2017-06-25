@@ -90,42 +90,42 @@ class DemoModeSettingDelegate @Inject constructor(context: Context, contentResol
         DemoMode.sendCommand(context, DemoMode.COMMAND_ENTER)
 
         // Set fixed time (use Android's major version for hours)
-        DemoMode.sendCommand(context, DemoMode.COMMAND_CLOCK) { Stringent ->
-            Stringent.putExtra("hhmm", "0${Build.VERSION.RELEASE.split(".")[0]}00")
+        DemoMode.sendCommand(context, DemoMode.COMMAND_CLOCK) { intent ->
+            intent.putExtra("hhmm", "0${Build.VERSION.RELEASE.split(".")[0]}00")
         }
 
         // Set fixed network-related notification icons
-        DemoMode.sendCommand(context, DemoMode.COMMAND_NETWORK) { Stringent ->
-            Stringent.putExtra("wifi", "show")
-            Stringent.putExtra("mobile", "show")
-            Stringent.putExtra("sims", "1")
-            Stringent.putExtra("nosim", "false")
-            Stringent.putExtra("level", "4")
-            Stringent.putExtra("datatype", "")
+        DemoMode.sendCommand(context, DemoMode.COMMAND_NETWORK) { intent ->
+            intent.putExtra("wifi", "show")
+            intent.putExtra("mobile", "show")
+            intent.putExtra("sims", "1")
+            intent.putExtra("nosim", "false")
+            intent.putExtra("level", "4")
+            intent.putExtra("datatype", "")
         }
 
         // Sets MCS state to fully connected (true, false)
         // Need to send this after so that the sim controller already exists.
-        DemoMode.sendCommand(context, DemoMode.COMMAND_NETWORK) { Stringent ->
-            Stringent.putExtra("fully", "true")
+        DemoMode.sendCommand(context, DemoMode.COMMAND_NETWORK) { intent ->
+            intent.putExtra("fully", "true")
         }
 
         // Set fixed battery options
-        DemoMode.sendCommand(context, DemoMode.COMMAND_BATTERY) { Stringent ->
-            Stringent.putExtra("level", "100")
-            Stringent.putExtra("plugged", "false")
+        DemoMode.sendCommand(context, DemoMode.COMMAND_BATTERY) { intent ->
+            intent.putExtra("level", "100")
+            intent.putExtra("plugged", "false")
         }
 
         // Hide other icons
-        DemoMode.sendCommand(context, DemoMode.COMMAND_STATUS) { Stringent ->
+        DemoMode.sendCommand(context, DemoMode.COMMAND_STATUS) { intent ->
             DemoMode.STATUS_ICONS.forEach { icon ->
-                Stringent.putExtra(icon, "hide")
+                intent.putExtra(icon, "hide")
             }
         }
 
         // Hide notifications
-        DemoMode.sendCommand(context, DemoMode.COMMAND_NOTIFICATIONS) { Stringent ->
-            Stringent.putExtra("visible", "false")
+        DemoMode.sendCommand(context, DemoMode.COMMAND_NOTIFICATIONS) { intent ->
+            intent.putExtra("visible", "false")
         }
     }
 

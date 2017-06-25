@@ -30,6 +30,7 @@ import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.base.App
 import com.adriangl.devquicktiles.tiles.TileStatusController
 import com.adriangl.devquicktiles.tiles.screenon.KeepScreenOnTileService
+import com.adriangl.devquicktiles.utils.addOnPrefChangeListener
 import javax.inject.Inject
 
 /**
@@ -91,7 +92,7 @@ class KeepScreenOnPreferenceFragment : PreferenceFragment() {
         true
     }
 
-    @Inject lateinit var tileStatusController : TileStatusController
+    @Inject lateinit var tileStatusController: TileStatusController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,17 +106,20 @@ class KeepScreenOnPreferenceFragment : PreferenceFragment() {
         // to their values. When their values change, their summaries are
         // updated to reflect the new value, per the Android Design
         // guidelines.
-        bindPreferenceSummaryToValue(
-                findPreference(getString(R.string.pref_keep_screen_on_key)),
-                Preference.OnPreferenceChangeListener { _, newValue ->
-                    val tileStatus = tileStatusController.getTileStatus(KeepScreenOnTileService::class)
-                    tileStatus?.let { (added, state) ->
-                        if (added && state == Tile.STATE_ACTIVE) {
-                            App.component.settingsDelegateMap()[KeepScreenOnTileService::class.java]?.saveValue(newValue as String)
-                        }
-                    }
-                    true
-                })
+
+        val keepScreenOnPreference = findPreference(getString(R.string.pref_keep_screen_on_key))
+
+        keepScreenOnPreference.addOnPrefChangeListener(Preference.OnPreferenceChangeListener { _, newValue ->
+            val tileStatus = tileStatusController.getTileStatus(KeepScreenOnTileService::class)
+            tileStatus?.let { (added, state) ->
+                if (added && state == Tile.STATE_ACTIVE) {
+                    App.component.settingsDelegateMap()[KeepScreenOnTileService::class.java]?.saveValue(newValue as String)
+                }
+            }
+            true
+        })
+
+        bindSummaryToPreferenceChange(keepScreenOnPreference)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -127,28 +131,11 @@ class KeepScreenOnPreferenceFragment : PreferenceFragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    /**
-     * Binds a preference's summary to its value. More specifically, when the
-     * preference's value is changed, its summary (line of text below the
-     * preference title) is updated to reflect the value. The summary is also
-     * immediately updated upon calling this method. The exact display format is
-     * dependent on the type of preference.
-
-     * @see .sBindPreferenceSummaryToValueListener
-     */
-    private fun bindPreferenceSummaryToValue(preference: Preference,
-                                             listener: Preference.OnPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ -> true }) {
-        // Set the listener to watch for value changes.
-        preference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener {
-            preference, newValue ->
-            listener.onPreferenceChange(preference, newValue) &&
-                    sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, newValue)
-        }
-
-
-        // Trigger the listener immediately with the preference's
-        // current value.
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+    private fun bindSummaryToPreferenceChange(preference: Preference) {
+        preference.addOnPrefChangeListener(sBindPreferenceSummaryToValueListener)
+        // Call the listener immediately after loading so it changes the summary value as soon as we enter the fragment
+        sBindPreferenceSummaryToValueListener.onPreferenceChange(
+                preference,
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.context)
                         .getString(preference.key, ""))

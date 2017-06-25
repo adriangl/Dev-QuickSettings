@@ -61,12 +61,84 @@ class DemoMode {
 
         fun sendCommand(context: Context, command: String, intentBuilder: (Intent) -> Unit = {}) {
             // Prepare intent and command to send
-            val intent = Intent(DemoMode.ACTION_DEMO)
-            intent.putExtra(DemoMode.EXTRA_COMMAND, command)
+            val intent = Intent(ACTION_DEMO)
+            intent.putExtra(EXTRA_COMMAND, command)
             // Apply extras if they exist
             intent.apply(intentBuilder)
             // Send broadcast to system demo mode receiver
             context.sendBroadcast(intent)
+        }
+    }
+
+    interface Command {
+        fun build(): Intent
+    }
+
+    class EnterCommand : Command {
+        override fun build(): Intent {
+            return Intent(ACTION_DEMO)
+                    .putExtra(EXTRA_COMMAND, COMMAND_ENTER)
+        }
+    }
+
+    class ExitCommand : Command {
+        override fun build(): Intent {
+            return Intent(ACTION_DEMO)
+                    .putExtra(EXTRA_COMMAND, COMMAND_EXIT)
+        }
+    }
+
+    class ClockCommand(val hours: Int = 0, val minutes: Int = 0) : Command {
+        override fun build(): Intent {
+            return Intent(ACTION_DEMO)
+                    .putExtra(EXTRA_COMMAND, COMMAND_CLOCK)
+                    .putExtra("hhmm", buildClockFormat())
+        }
+
+        private fun buildClockFormat(): String {
+            if ((hours !in 0..23) || (minutes !in 0..59)) throw UnsupportedOperationException("Invalid time format")
+            return String.format("%02d%02d", hours, minutes)
+        }
+    }
+
+    class BatteryCommand(val level: Int = -1, val plugged: Boolean = false) : Command {
+        override fun build(): Intent {
+            val intent = Intent(ACTION_DEMO)
+                    .putExtra(EXTRA_COMMAND, COMMAND_BATTERY)
+                    .putExtra("plugged", plugged)
+
+            if (level >= 0) intent.putExtra("level", level)
+
+            return intent
+        }
+    }
+
+    class NetworkCommand(val showAirplane: Boolean = false,
+                         val fully: Boolean = true,
+                         val showWifi: Boolean = true,
+                         val wifiLevel: Int = -1,
+                         val showMobile: Boolean = true,
+                         val mobileDataType: DataType = NetworkCommand.DataType.TYPE_NULL,
+                         val mobileLevel: Int = -1,
+                         val showCarrierNetworkChange: Boolean = false) : Command {
+        enum class DataType(val value: String) {
+            TYPE_NULL(""),
+            TYPE_1X("1x"),
+            TYPE_3G("3g"),
+            TYPE_4G("4g"),
+            TYPE_E("e"),
+            TYPE_G("g"),
+            TYPE_H("h"),
+            TYPE_LTE("lte"),
+            TYPE_ROAM("roam")
+        }
+
+        override fun build(): Intent {
+            val intent = Intent(ACTION_DEMO)
+                    .putExtra(EXTRA_COMMAND, COMMAND_NETWORK)
+s
+
+            return intent
         }
     }
 }

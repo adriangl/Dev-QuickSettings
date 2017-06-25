@@ -17,14 +17,13 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- These settings headers are only used on tablets. -->
-
     <header
-        android:fragment="com.adriangl.devquicktiles.settings.TileSettingsActivity$KeepScreenOnPreferenceFragment"
+        android:fragment="com.adriangl.devquicktiles.settings.KeepScreenOnPreferenceFragment"
         android:icon="@drawable/ic_qs_keep_screen_on_enabled"
         android:title="@string/pref_header_keep_screen_on" />
 
     <header
-        android:fragment="com.adriangl.devquicktiles.settings.TileSettingsActivity$DemoModePreferenceFragment"
+        android:fragment="com.adriangl.devquicktiles.settings.DemoModePreferenceFragment"
         android:icon="@drawable/ic_qs_demo_mode_enabled"
         android:title="@string/pref_header_demo_mode" />
 
