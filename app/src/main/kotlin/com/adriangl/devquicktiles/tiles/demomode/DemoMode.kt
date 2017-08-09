@@ -136,8 +136,6 @@ class DemoMode {
         override fun build(): Intent {
             val intent = Intent(ACTION_DEMO)
                     .putExtra(EXTRA_COMMAND, COMMAND_NETWORK)
-s
-
             return intent
         }
     }
