@@ -59,6 +59,9 @@ class DemoMode {
                 "speakerphone",
                 "managed_profile")
 
+        /**
+         * Sends a command to apply for the demo mode.
+         */
         fun sendCommand(context: Context, command: String, intentBuilder: (Intent) -> Unit = {}) {
             // Prepare intent and command to send
             val intent = Intent(DemoMode.ACTION_DEMO)

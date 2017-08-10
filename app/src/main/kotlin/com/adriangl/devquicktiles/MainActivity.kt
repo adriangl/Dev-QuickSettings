@@ -38,6 +38,9 @@ import com.adriangl.devquicktiles.utils.PermissionUtils
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 
+/**
+ * App main activity; displays info about the available options and contains a [NavigationView] to access app settings and information.
+ */
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.qs_tile_descriptions_recyclerview)
@@ -49,7 +52,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     @BindView(R.id.permissions_share)
     lateinit var permissionsShareButton: Button
 
-    private lateinit var drawer : DrawerLayout
+    private lateinit var drawer: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         val toggle = ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -112,30 +115,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun getDescriptionItems(): List<QsDescriptionsItem> {
         return listOf(
-                QsDescriptionsItem(
-                        R.drawable.ic_qs_usb_debugging_enabled,
-                        getString(R.string.qs_usb_debugging),
-                        getString(R.string.qs_usb_debugging_description)),
-                QsDescriptionsItem(
-                        R.drawable.ic_qs_demo_mode_enabled,
-                        getString(R.string.qs_demo_mode),
-                        getString(R.string.qs_demo_mode_description)),
-                QsDescriptionsItem(
-                        R.drawable.ic_qs_keep_screen_on_enabled,
-                        getString(R.string.qs_keep_screen_on),
-                        getString(R.string.qs_keep_screen_on_description)),
-                QsDescriptionsItem(
-                        R.drawable.ic_qs_animator_duration_enabled,
-                        getString(R.string.qs_animator_duration),
-                        getString(R.string.qs_animator_duration_description)),
-                QsDescriptionsItem(
-                        R.drawable.ic_qs_show_taps_enabled,
-                        getString(R.string.qs_show_taps),
-                        getString(R.string.qs_show_taps_description)),
-                QsDescriptionsItem(
-                        R.drawable.ic_qs_finish_activities_enabled,
-                        getString(R.string.qs_finish_activities),
-                        getString(R.string.qs_finish_activities_description))
+            QsDescriptionsItem(
+                R.drawable.ic_qs_usb_debugging_enabled,
+                getString(R.string.qs_usb_debugging),
+                getString(R.string.qs_usb_debugging_description)),
+            QsDescriptionsItem(
+                R.drawable.ic_qs_demo_mode_enabled,
+                getString(R.string.qs_demo_mode),
+                getString(R.string.qs_demo_mode_description)),
+            QsDescriptionsItem(
+                R.drawable.ic_qs_keep_screen_on_enabled,
+                getString(R.string.qs_keep_screen_on),
+                getString(R.string.qs_keep_screen_on_description)),
+            QsDescriptionsItem(
+                R.drawable.ic_qs_animator_duration_enabled,
+                getString(R.string.qs_animator_duration),
+                getString(R.string.qs_animator_duration_description)),
+            QsDescriptionsItem(
+                R.drawable.ic_qs_show_taps_enabled,
+                getString(R.string.qs_show_taps),
+                getString(R.string.qs_show_taps_description)),
+            QsDescriptionsItem(
+                R.drawable.ic_qs_finish_activities_enabled,
+                getString(R.string.qs_finish_activities),
+                getString(R.string.qs_finish_activities_description))
         )
     }
 
@@ -145,14 +148,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/plain"
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                getString(R.string.share_permissions_subject, getString(R.string.app_name)))
+            getString(R.string.share_permissions_subject, getString(R.string.app_name)))
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getFormattedPermissions())
         startActivity(Intent.createChooser(sharingIntent, resources.getString(R.string.share_using)))
     }
 
     private fun hasNeededPermissions(): Boolean {
         return (PermissionUtils.checkSelfPermissionIsGranted(this, android.Manifest.permission.WRITE_SECURE_SETTINGS)
-                and (PermissionUtils.checkSelfPermissionIsGranted(this, android.Manifest.permission.DUMP)))
+            and (PermissionUtils.checkSelfPermissionIsGranted(this, android.Manifest.permission.DUMP)))
     }
 
     private fun showSettings() {
@@ -161,15 +164,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showAbout() {
         LibsBuilder()
-                .withFields(R.string::class.java.fields)
-                .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                .withActivityTitle(getString(R.string.menu_about))
-                .withAboutIconShown(true)
-                .withAboutAppName(getString(R.string.app_name))
-                .withAboutVersionShownName(true)
-                .withAboutVersionShownCode(false)
-                .withAutoDetect(true)
-                .withExcludedLibraries("AndroidIconics", "fastadapter")
-                .start(this)
+            .withFields(R.string::class.java.fields)
+            .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+            .withActivityTitle(getString(R.string.menu_about))
+            .withAboutIconShown(true)
+            .withAboutAppName(getString(R.string.app_name))
+            .withAboutVersionShownName(true)
+            .withAboutVersionShownCode(false)
+            .withAutoDetect(true)
+            .withExcludedLibraries("AndroidIconics", "fastadapter")
+            .start(this)
     }
 }

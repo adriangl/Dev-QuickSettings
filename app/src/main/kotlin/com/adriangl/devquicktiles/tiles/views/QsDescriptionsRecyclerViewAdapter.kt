@@ -23,9 +23,15 @@ import android.view.ViewGroup
 import com.adriangl.devquicktiles.R
 import java.util.*
 
+/**
+ * Adapter used to display [QsDescriptionsItem]s.
+ */
 class QsDescriptionsRecyclerViewAdapter : RecyclerView.Adapter<QsDescriptionsRecyclerViewHolder>() {
     val items = ArrayList<QsDescriptionsItem>()
 
+    /**
+     * Sets the items to display by this adapter.
+     */
     fun setItems(list: List<QsDescriptionsItem>) {
         items.clear()
         items.addAll(list)

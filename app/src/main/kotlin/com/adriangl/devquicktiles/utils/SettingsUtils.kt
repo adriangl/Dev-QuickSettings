@@ -19,6 +19,10 @@ package com.adriangl.devquicktiles.utils
 import android.content.ContentResolver
 import android.provider.Settings
 
+/**
+ * Utils class to write and read from specific [Settings] scopes.
+ */
+@Suppress("UndocumentedPublicFunction")
 class SettingsUtils {
     companion object {
         fun getIntFromGlobalSettings(contentResolver: ContentResolver, key: String): Int {

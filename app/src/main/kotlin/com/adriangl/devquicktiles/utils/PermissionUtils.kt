@@ -20,8 +20,14 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
 
+/**
+ * Basic class to handle app permissions.
+ */
 class PermissionUtils {
     companion object {
+        /**
+         * Checks if the given [Context] has the requested permissions.
+         */
         fun checkSelfPermissionIsGranted(context: Context, permission: String): Boolean {
             return ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
         }

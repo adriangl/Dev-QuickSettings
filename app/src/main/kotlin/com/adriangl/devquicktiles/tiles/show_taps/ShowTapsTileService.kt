@@ -23,7 +23,9 @@ import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 import com.adriangl.devquicktiles.utils.SettingsUtils
 
-
+/**
+ * Tile that handles changing the "Show taps" development setting.
+ */
 class ShowTapsTileService : DevelopmentTileService<Int>() {
     companion object {
         val SETTING = "show_touches" // This is hidden for developers, so we use the string resource

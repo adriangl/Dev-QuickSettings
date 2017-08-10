@@ -1,0 +1,162 @@
+autoCorrect: true
+failFast: false
+
+build:
+  warningThreshold: 5
+  failThreshold: 10
+  weights:
+    complexity: 2
+    formatting: 10
+    comments: 10
+
+potential-bugs:
+  active: true
+  DuplicateCaseInWhenExpression:
+    active: true
+  EqualsWithHashCodeExist:
+    active: true
+  ExplicitGarbageCollectionCall:
+    active: true
+  LateinitUsage:
+    active: false
+  UnsafeCallOnNullableType:
+    active: false
+  UnsafeCast:
+    active: false
+
+performance:
+  active: true
+  ForEachOnRange:
+    active: true
+  SpreadOperator:
+    active: true
+
+exceptions:
+  active: false
+
+empty-blocks:
+  active: false
+
+complexity:
+  active: true
+  LongMethod:
+    threshold: 20
+  LongParameterList:
+    threshold: 7
+  LargeClass:
+    threshold: 300
+  ComplexMethod:
+    threshold: 20
+  TooManyFunctions:
+    threshold: 25
+  ComplexCondition:
+    threshold: 3
+  LabeledExpression:
+    active: false
+
+code-smell:
+  active: true
+  FeatureEnvy:
+    threshold: 0.5
+    weight: 0.45
+    base: 0.5
+
+formatting:
+  active: true
+  useTabs: false
+  Indentation:
+    active: true
+    indentSize: 4
+  ConsecutiveBlankLines:
+    active: true
+    autoCorrect: false
+  MultipleSpaces:
+    active: false
+    autoCorrect: false
+  SpacingAfterComma:
+    active: true
+    autoCorrect: false
+  SpacingAfterKeyword:
+    active: true
+    autoCorrect: false
+  SpacingAroundColon:
+    active: true
+    autoCorrect: false
+  SpacingAroundCurlyBraces:
+    active: true
+    autoCorrect: false
+  SpacingAroundOperator:
+    active: true
+    autoCorrect: false
+  TrailingSpaces:
+    active: true
+    autoCorrect: false
+  UnusedImports:
+    active: true
+    autoCorrect: false
+  OptionalSemicolon:
+    active: true
+    autoCorrect: false
+  OptionalUnit:
+    active: true
+    autoCorrect: false
+  ExpressionBodySyntax:
+    active: false
+    autoCorrect: false
+  ExpressionBodySyntaxLineBreaks:
+    active: false
+    autoCorrect: false
+  OptionalReturnKeyword:
+    active: true
+    autoCorrect: false
+
+style:
+  active: true
+  ForbiddenComment:
+      active: false
+      values: 'TODO:,FIXME:,STOPSHIP:'
+  MagicNumber:
+      active: false # Enable and test this rule when detekt reaches 1.0.0.RC2, it's bugged right now
+  MaxLineLength:
+      active: true
+      maxLineLength: 140
+      excludePackageStatements: true
+      excludeImportStatements: true
+  ModifierOrder:
+    active: true
+  NamingConventionViolation:
+      active: true
+      variablePattern: '^_|(_)?[a-z$][a-zA-Z$0-9]*$' # Also allow '_' as a variable name to properly use destructuring declarations
+      constantPattern: '^([A-Z_]*|serialVersionUID)$'
+      methodPattern: '^[a-z$][a-zA-Z$0-9]*$'
+      classPattern: '[A-Z$][a-zA-Z$0-9$]*'
+      enumEntryPattern: '^[A-Z$][a-zA-Z_$]*$'
+  NewLineAtEndOfFile:
+    active: false
+  ReturnCount:
+    active: false
+  WildcardImport:
+    active: false
+
+comments:
+  active: true
+  CommentOverPrivateMethod:
+    active: false # It's not bad to comment private methods if they're not clear enough
+  CommentOverPrivateProperty:
+    active: false # Again, extra documentation is not that bad
+  UndocumentedPublicClass:
+    active: true
+    searchInNestedClass: true
+    searchInInnerClass: true
+    searchInInnerInterface: true
+  UndocumentedPublicFunction:
+    active: true
+
+# *experimental feature*
+# Migration rules can be defined in the same config file or a new one
+migration:
+  active: true
+  imports:
+    # your.package.Class: new.package.or.Class
+    # for example:
+    # io.gitlab.arturbosch.detekt.api.Rule: io.gitlab.arturbosch.detekt.rule.Rule

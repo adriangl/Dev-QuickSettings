@@ -24,6 +24,9 @@ import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 import com.adriangl.devquicktiles.utils.SettingsUtils
 
+/**
+ * Tile that handles changing the "Keep screen on" development setting.
+ */
 class KeepScreenOnTileService : DevelopmentTileService<Int>() {
     companion object {
         val SETTING = Settings.Global.STAY_ON_WHILE_PLUGGED_IN
