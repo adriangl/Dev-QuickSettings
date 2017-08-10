@@ -23,6 +23,9 @@ import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 import com.adriangl.devquicktiles.utils.SettingsUtils
 
+/**
+ * Tile that handles changing the "Don't keep activities" development setting.
+ */
 class FinishActivitiesTileService : DevelopmentTileService<Int>() {
     companion object {
         val SETTING = Settings.Global.ALWAYS_FINISH_ACTIVITIES
@@ -42,7 +45,7 @@ class FinishActivitiesTileService : DevelopmentTileService<Int>() {
         return value
     }
 
-    override fun saveValue(value: Int) : Boolean {
+    override fun saveValue(value: Int): Boolean {
         return SettingsUtils.setIntToGlobalSettings(contentResolver, SETTING, value)
     }
 
@@ -52,8 +55,8 @@ class FinishActivitiesTileService : DevelopmentTileService<Int>() {
 
     override fun getIcon(value: Int): Icon? {
         return Icon.createWithResource(applicationContext,
-                if (value != 0) R.drawable.ic_qs_finish_activities_enabled
-                else R.drawable.ic_qs_finish_activities_disabled)
+            if (value != 0) R.drawable.ic_qs_finish_activities_enabled
+            else R.drawable.ic_qs_finish_activities_disabled)
     }
 
     override fun getLabel(value: Int): CharSequence? {

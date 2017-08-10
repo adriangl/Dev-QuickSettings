@@ -23,6 +23,11 @@ import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 import com.adriangl.devquicktiles.utils.SettingsUtils
 
+/**
+ * Tile that handles changing between different animator duration scales.
+ *
+ * Based on <a href="https://github.com/nickbutcher/AnimatorDurationTile">nickbutcher/AnimatorDurationTile</a>.
+ */
 class AnimatorDurationTileService : DevelopmentTileService<Float>() {
     companion object {
         val SETTING = Settings.Global.ANIMATOR_DURATION_SCALE

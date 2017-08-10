@@ -18,4 +18,7 @@ package com.adriangl.devquicktiles.tiles.views
 
 import android.support.annotation.DrawableRes
 
+/**
+ * Class that holds data about what the different tiles can do. They're displayed in [MainActivity].
+ */
 data class QsDescriptionsItem(@DrawableRes val iconResource: Int, val title: String, val description: String)

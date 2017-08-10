@@ -22,6 +22,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.adriangl.devquicktiles.R
 
+/**
+ * [RecyclerView.ViewHolder] used to display [QsDescriptionsItem]s.
+ */
 class QsDescriptionsRecyclerViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
     val itemTitle: TextView = itemView?.findViewById(R.id.qs_title) as TextView
     val itemDescription: TextView = itemView?.findViewById(R.id.qs_description) as TextView

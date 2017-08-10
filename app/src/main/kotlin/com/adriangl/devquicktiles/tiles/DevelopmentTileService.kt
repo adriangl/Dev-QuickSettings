@@ -16,7 +16,7 @@
 
 package com.adriangl.devquicktiles.tiles
 
-import android.database.ContentObserver;
+import android.database.ContentObserver
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Handler
@@ -26,6 +26,9 @@ import android.widget.Toast
 import com.adriangl.devquicktiles.R
 import timber.log.Timber
 
+/**
+ * Base class to implement basic tile services based on development settings.
+ */
 abstract class DevelopmentTileService<T : Any> : TileService() {
 
     private val contentObserver = object : ContentObserver(Handler()) {
@@ -78,7 +81,7 @@ abstract class DevelopmentTileService<T : Any> : TileService() {
         } catch (e: Exception) {
             val permissionNotGrantedString = getString(R.string.qs_permissions_not_granted)
             Toast.makeText(applicationContext, permissionNotGrantedString, Toast.LENGTH_LONG)
-                    .show()
+                .show()
             Timber.e(e, permissionNotGrantedString)
         }
     }
@@ -95,18 +98,39 @@ abstract class DevelopmentTileService<T : Any> : TileService() {
         Timber.d("Tile updated: {label=%s, state=%s, value=%s}", qsTile.label, qsTile.state, value)
     }
 
+    /**
+     * Returns if the tile is in an "active" state.
+     */
     abstract fun isActive(value: T): Boolean
 
+    /**
+     * Returns the possible values that the tile can have.
+     */
     abstract fun getValueList(): List<T>
 
+    /**
+     * Queries the value that the tile service holds.
+     */
     abstract fun queryValue(): T
 
+    /**
+     * Saves the given tile value.
+     */
     abstract fun saveValue(value: T): Boolean
 
+    /**
+     * Returns an [Icon] for a given tile value. May be null.
+     */
     abstract fun getIcon(value: T): Icon?
 
+    /**
+     * Returns a [CharSequence] for a given tile value. May be null.
+     */
     abstract fun getLabel(value: T): CharSequence?
 
+    /**
+     * Returns a list of [Uri]s that the tile uses to save values.
+     */
     abstract fun getSettingsUri(): List<Uri>
 
 }

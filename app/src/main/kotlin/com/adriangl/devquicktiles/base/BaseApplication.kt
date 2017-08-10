@@ -20,6 +20,9 @@ import android.app.Application
 import com.adriangl.devquicktiles.BuildConfig
 import timber.log.Timber
 
+/**
+ * Custom [Application] for the app.
+ */
 class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()

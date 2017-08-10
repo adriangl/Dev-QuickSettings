@@ -23,6 +23,9 @@ import com.adriangl.devquicktiles.R
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 import com.adriangl.devquicktiles.utils.SettingsUtils
 
+/**
+ * Tile that handles changing the "USB debugging" development setting.
+ */
 class UsbDebuggingTileService : DevelopmentTileService<Int>() {
     companion object {
         val SETTING = Settings.Global.ADB_ENABLED
