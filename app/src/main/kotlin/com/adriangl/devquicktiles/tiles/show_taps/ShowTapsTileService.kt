@@ -18,5 +18,4 @@ package com.adriangl.devquicktiles.tiles.show_taps
 
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 
-
 class ShowTapsTileService : DevelopmentTileService()

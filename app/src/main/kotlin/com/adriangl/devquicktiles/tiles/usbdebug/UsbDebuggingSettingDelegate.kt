@@ -22,6 +22,7 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.provider.Settings
 import com.adriangl.devquicktiles.R
+import com.adriangl.devquicktiles.base.AppScope
 import com.adriangl.devquicktiles.tiles.DevelopmentSettingDelegate
 import com.adriangl.devquicktiles.utils.SettingsUtils
 import javax.inject.Inject
@@ -29,9 +30,11 @@ import javax.inject.Inject
 /**
  * Created by adrian-macbook on 23/5/17.
  */
+@AppScope
 class UsbDebuggingSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
     companion object {
-        val SETTING = Settings.Global.ADB_ENABLED
+        private const val SETTING = Settings.Global.ADB_ENABLED
+        private const val DEFAULT_VALUE = "0"
     }
 
     override fun isActive(value: String): Boolean {
@@ -43,7 +46,7 @@ class UsbDebuggingSettingDelegate @Inject constructor(context: Context, contentR
     }
 
     override fun queryValue(): String {
-        var value = SettingsUtils.getStringFromGlobalSettings(contentResolver, SETTING)
+        var value = SettingsUtils.getStringFromGlobalSettings(contentResolver, SETTING) ?: DEFAULT_VALUE
         if (value.toInt() > 1) value = "1"
         return value
     }
@@ -54,8 +57,8 @@ class UsbDebuggingSettingDelegate @Inject constructor(context: Context, contentR
 
     override fun getIcon(value: String): Icon? {
         return Icon.createWithResource(context,
-                if (value.toInt() != 0) R.drawable.ic_qs_usb_debugging_enabled
-                else R.drawable.ic_qs_usb_debugging_disabled)
+            if (value.toInt() != 0) R.drawable.ic_qs_usb_debugging_enabled
+            else R.drawable.ic_qs_usb_debugging_disabled)
     }
 
     override fun getLabel(value: String): CharSequence? {

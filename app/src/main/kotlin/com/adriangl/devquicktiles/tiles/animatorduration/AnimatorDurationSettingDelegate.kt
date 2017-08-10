@@ -22,14 +22,17 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.provider.Settings
 import com.adriangl.devquicktiles.R
+import com.adriangl.devquicktiles.base.AppScope
 import com.adriangl.devquicktiles.tiles.DevelopmentSettingDelegate
 import com.adriangl.devquicktiles.utils.SettingsUtils
 import javax.inject.Inject
 
+@AppScope
 class AnimatorDurationSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
 
     companion object {
-        val SETTING = Settings.Global.ANIMATOR_DURATION_SCALE
+        private const val SETTING = Settings.Global.ANIMATOR_DURATION_SCALE
+        private const val DEFAULT_VALUE = "1"
     }
 
     override fun getSettingsUri(): List<Uri> {
@@ -41,7 +44,7 @@ class AnimatorDurationSettingDelegate @Inject constructor(context: Context, cont
     }
 
     override fun queryValue(): String {
-        return SettingsUtils.getStringFromGlobalSettings(contentResolver, SETTING)
+        return SettingsUtils.getStringFromGlobalSettings(contentResolver, SETTING) ?: DEFAULT_VALUE
     }
 
     override fun saveValue(value: String): Boolean {

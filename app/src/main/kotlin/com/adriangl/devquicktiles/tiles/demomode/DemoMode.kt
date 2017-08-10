@@ -18,12 +18,228 @@ package com.adriangl.devquicktiles.tiles.demomode
 
 import android.content.Context
 import android.content.Intent
+import java.util.*
+import kotlin.properties.Delegates
+
+data class Command(val name: String = DemoMode.EXTRA_COMMAND, val value: String) {
+    constructor(name: String, value: Boolean, show: Boolean = false) : this(name,
+        if (show) {
+            if (value) "show" else "hide"
+        } else value.toString())
+
+    constructor(name: String, value: Any) : this(name, value.toString())
+}
+
+@DslMarker
+annotation class CommandDslMarker
+
+@CommandDslMarker
+abstract class CommandHolder {
+    val children = mutableListOf<CommandHolder>()
+
+    protected fun <T : CommandHolder> initCommand(commandHolder: T, init: T.() -> Unit): T {
+        commandHolder.init()
+        children.add(commandHolder)
+        return commandHolder
+    }
+
+    abstract fun getOwnCommands(): List<List<Command>>
+
+    open fun getCommands(): List<List<Command>> {
+        return getOwnCommands()
+            .plus(
+                children
+                    .map { child -> child.getCommands() }
+                    .flatten())
+    }
+}
+
+class Battery(var plugged: Boolean? = null) : CommandHolder() {
+    var level: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 0..100 }
+
+    override fun getOwnCommands(): List<List<Command>> {
+        return listOf(mutableListOf<Command>().apply {
+            add(Command(value = "battery"))
+            level?.let { add(Command("level", level!!)) }
+            plugged?.let { add(Command("plugged", plugged!!)) }
+        })
+    }
+}
+
+class Network(var airplane: Boolean? = null,
+              var fully: Boolean? = null,
+              var carrierNetworkChange: Boolean? = null,
+              var noSim: Boolean? = null) : CommandHolder() {
+
+    var sims: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 1..8 }
+
+    override fun getOwnCommands(): List<List<Command>> {
+        return mutableListOf(mutableListOf<Command>().apply {
+            add(Command(value = "network"))
+            airplane?.let {
+                add(Command("airplane", airplane!!, true))
+            }
+            carrierNetworkChange?.let {
+                add(Command("carriernetworkchange", carrierNetworkChange!!, true))
+            }
+            noSim?.let {
+                add(Command("nosim", noSim!!, true))
+            }
+            if (!(noSim ?: false)) {
+                sims?.let {
+                    add(Command("sims", sims!!))
+                }
+            }
+        })
+    }
+
+    override fun getCommands(): List<List<Command>> {
+        var commandSetList = super.getCommands()
+        // This is a special case: fully must be added last in the list so the command works as expected >_<
+        fully?.let {
+            commandSetList = commandSetList.plus<List<Command>>(
+                mutableListOf<Command>().apply {
+                    add(Command(value = "network"))
+                    add(Command("fully", fully!!))
+                })
+        }
+        return commandSetList
+    }
+
+    class Wifi(var show: Boolean? = null) : CommandHolder() {
+        var level: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 0..4 }
+
+        override fun getOwnCommands(): List<List<Command>> {
+            return listOf(mutableListOf<Command>().apply {
+                add(Command(value = "network"))
+                add(Command("wifi", show!!, true))
+                if (show ?: false) {
+                    level?.let { add(Command("level", level!!)) }
+                }
+            })
+        }
+    }
+
+    class Mobile(var show: Boolean? = null, var dataType: DataType? = null) : CommandHolder() {
+        var level: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 0..4 }
+
+        enum class DataType(val value: String) {
+            TYPE_1X("1x"),
+            TYPE_3G("3g"),
+            TYPE_4G("4g"),
+            TYPE_E("e"),
+            TYPE_G("g"),
+            TYPE_H("h"),
+            TYPE_LTE("lte"),
+            TYPE_ROAM("roam")
+        }
+
+        override fun getOwnCommands(): List<List<Command>> {
+            return listOf(mutableListOf<Command>().apply {
+                add(Command(value = "network"))
+                show?.let {
+                    add(Command("mobile", show!!, true))
+                    if (show ?: false) {
+                        dataType?.let { add(Command("datatype", dataType!!.value)) }
+                        level?.let { add(Command("level", level!!)) }
+                    }
+                }
+            })
+        }
+    }
+
+    fun wifi(init: Wifi.() -> Unit): Wifi = initCommand(Wifi(), init)
+
+    fun mobile(init: Mobile.() -> Unit): Mobile = initCommand(Mobile(), init)
+}
+
+class Bars(var mode: Mode? = null) : CommandHolder() {
+    enum class Mode(val value: String) {
+        OPAQUE("opaque"),
+        SEMI_TRANSPARENT("semi-transparent"),
+        TRANSPARENT("transparent");
+    }
+
+    override fun getOwnCommands(): List<List<Command>> {
+        return listOf(mutableListOf<Command>().apply {
+            add(Command(value = "bars"))
+            mode?.let { add(Command("mode", mode!!.value)) }
+        })
+    }
+}
+
+class Status(var volume: VolumeValues? = null,
+             var bluetooth: BluetoothValues? = null,
+             var location: Boolean? = null,
+             var alarm: Boolean? = null,
+             var zen: Boolean? = null,
+             var sync: Boolean? = null,
+             var tty: Boolean? = null,
+             var eri: Boolean? = null,
+             var mute: Boolean? = null,
+             var speakerPhone: Boolean? = null,
+             var managedProfile: Boolean? = null) : CommandHolder() {
+
+    enum class VolumeValues(val value: String) {
+        SILENT("silent"),
+        VIBRATE("vibrate"),
+        HIDE("hide")
+    }
+
+    enum class BluetoothValues(val value: String) {
+        CONNECTED("connected"),
+        DISCONNECTED("disconnected"),
+        HIDE("hide")
+    }
+
+    override fun getOwnCommands(): List<List<Command>> {
+        return listOf(mutableListOf<Command>().apply {
+            add(Command(value = "status"))
+            volume?.let { add(Command("volume", volume!!.value)) }
+            bluetooth?.let { add(Command("bluetooth", bluetooth!!.value)) }
+            location?.let { add(Command("location", location!!, true)) }
+            alarm?.let { add(Command("alarm", alarm!!, true)) }
+            zen?.let { add(Command("zen", zen!!, true)) }
+            sync?.let { add(Command("sync", sync!!, true)) }
+            tty?.let { add(Command("tty", tty!!, true)) }
+            eri?.let { add(Command("eri", eri!!, true)) }
+            mute?.let { add(Command("mute", mute!!, true)) }
+            speakerPhone?.let { add(Command("speakerphone", speakerPhone!!, true)) }
+            managedProfile?.let { add(Command("managed_profile", speakerPhone!!, true)) }
+        })
+    }
+}
+
+class Notifications(var visible: Boolean? = null) : CommandHolder() {
+    override fun getOwnCommands(): List<List<Command>> {
+        return listOf(mutableListOf<Command>().apply {
+            add(Command(value = "notifications"))
+            visible?.let { add(Command("visible", visible.toString())) }
+        })
+    }
+}
+
+class Clock : CommandHolder() {
+    var hours: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 0..23 }
+    var minutes: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 0..59 }
+
+    override fun getOwnCommands(): List<List<Command>> {
+        val calendar = Calendar.getInstance()
+        val commandHours = hours ?: calendar.get(Calendar.HOUR_OF_DAY)
+        val commandMinutes = minutes ?: calendar.get(Calendar.MINUTE)
+
+        return listOf(mutableListOf<Command>().apply {
+            add(Command(value = "clock"))
+            add(Command("hhmm", "%02d%02d".format(commandHours, commandMinutes)))
+        })
+    }
+}
 
 /**
  * Code adapted from AOSP:
  * https://github.com/android/platform_frameworks_base/blob/marshmallow-mr3-release/packages/SystemUI/src/com/android/systemui/DemoMode.java
  */
-class DemoMode {
+class DemoMode : CommandHolder() {
     companion object {
         // Indicates that the demo mode is allowed, but it doesn't mean that it's active
         val DEMO_MODE_ALLOWED = "sysui_demo_allowed"
@@ -46,97 +262,51 @@ class DemoMode {
         val COMMAND_NOTIFICATIONS = "notifications"
         val COMMAND_VOLUME = "volume"
 
-        val STATUS_ICONS = arrayOf(
-                "volume",
-                "bluetooth",
-                "location",
-                "alarm",
-                "zen",
-                "sync",
-                "tty",
-                "eri",
-                "mute",
-                "speakerphone",
-                "managed_profile")
-
-        fun sendCommand(context: Context, command: String, intentBuilder: (Intent) -> Unit = {}) {
-            // Prepare intent and command to send
-            val intent = Intent(ACTION_DEMO)
-            intent.putExtra(EXTRA_COMMAND, command)
-            // Apply extras if they exist
-            intent.apply(intentBuilder)
-            // Send broadcast to system demo mode receiver
-            context.sendBroadcast(intent)
+        fun create(init: DemoMode.() -> Unit): DemoMode {
+            val demoModeDsl = DemoMode()
+            demoModeDsl.init()
+            return demoModeDsl
         }
     }
 
-    interface Command {
-        fun build(): Intent
+    override fun getOwnCommands(): List<List<Command>> {
+        return emptyList()
     }
 
-    class EnterCommand : Command {
-        override fun build(): Intent {
-            return Intent(ACTION_DEMO)
-                    .putExtra(EXTRA_COMMAND, COMMAND_ENTER)
-        }
-    }
+    fun battery(init: Battery.() -> Unit): Battery = initCommand(Battery(), init)
 
-    class ExitCommand : Command {
-        override fun build(): Intent {
-            return Intent(ACTION_DEMO)
-                    .putExtra(EXTRA_COMMAND, COMMAND_EXIT)
-        }
-    }
+    fun network(init: Network.() -> Unit): Network = initCommand(Network(), init)
 
-    class ClockCommand(val hours: Int = 0, val minutes: Int = 0) : Command {
-        override fun build(): Intent {
-            return Intent(ACTION_DEMO)
-                    .putExtra(EXTRA_COMMAND, COMMAND_CLOCK)
-                    .putExtra("hhmm", buildClockFormat())
-        }
+    fun bars(init: Bars.() -> Unit): Bars = initCommand(Bars(), init)
 
-        private fun buildClockFormat(): String {
-            if ((hours !in 0..23) || (minutes !in 0..59)) throw UnsupportedOperationException("Invalid time format")
-            return String.format("%02d%02d", hours, minutes)
+    fun status(init: Status.() -> Unit): Status = initCommand(Status(), init)
+
+    fun notifications(init: Notifications.() -> Unit): Notifications = initCommand(Notifications(), init)
+
+    fun clock(init: Clock.() -> Unit): Clock = initCommand(Clock(), init)
+
+    fun enter(ctx: Context) {
+        sendCommandList(ctx, listOf(Command(value = "enter")))
+        getCommands().forEach { commandList ->
+            if (commandList.isNotEmpty()) sendCommandList(ctx, commandList)
         }
     }
 
-    class BatteryCommand(val level: Int = -1, val plugged: Boolean = false) : Command {
-        override fun build(): Intent {
-            val intent = Intent(ACTION_DEMO)
-                    .putExtra(EXTRA_COMMAND, COMMAND_BATTERY)
-                    .putExtra("plugged", plugged)
-
-            if (level >= 0) intent.putExtra("level", level)
-
-            return intent
-        }
+    fun exit(ctx: Context) {
+        // Just launch the exit intent
+        sendCommandList(ctx, listOf(Command(value = "exit")))
     }
 
-    class NetworkCommand(val showAirplane: Boolean = false,
-                         val fully: Boolean = true,
-                         val showWifi: Boolean = true,
-                         val wifiLevel: Int = -1,
-                         val showMobile: Boolean = true,
-                         val mobileDataType: DataType = NetworkCommand.DataType.TYPE_NULL,
-                         val mobileLevel: Int = -1,
-                         val showCarrierNetworkChange: Boolean = false) : Command {
-        enum class DataType(val value: String) {
-            TYPE_NULL(""),
-            TYPE_1X("1x"),
-            TYPE_3G("3g"),
-            TYPE_4G("4g"),
-            TYPE_E("e"),
-            TYPE_G("g"),
-            TYPE_H("h"),
-            TYPE_LTE("lte"),
-            TYPE_ROAM("roam")
-        }
+    private fun sendCommandList(ctx: Context, commandList: List<Command>) {
+        val intent = Intent(DemoMode.ACTION_DEMO)
+            .addCommandList(commandList)
+        ctx.sendBroadcast(intent)
+    }
 
-        override fun build(): Intent {
-            val intent = Intent(ACTION_DEMO)
-                    .putExtra(EXTRA_COMMAND, COMMAND_NETWORK)
-            return intent
+    private fun <T : Intent> T.addCommandList(setList: List<Command>): T {
+        setList.isNotEmpty().let {
+            setList.forEach { putExtra(it.name, it.value) }
         }
+        return this
     }
 }

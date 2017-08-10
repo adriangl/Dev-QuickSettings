@@ -19,22 +19,20 @@ package com.adriangl.devquicktiles.utils
 import android.content.ContentResolver
 import android.provider.Settings
 
-class SettingsUtils {
-    companion object {
-        fun getStringFromGlobalSettings(contentResolver: ContentResolver, key: String): String {
-            return Settings.Global.getString(contentResolver, key)
-        }
+object SettingsUtils {
+    fun getStringFromGlobalSettings(contentResolver: ContentResolver, key: String): String? {
+        return Settings.Global.getString(contentResolver, key)
+    }
 
-        fun setStringToGlobalSettings(contentResolver: ContentResolver, key: String, value: String): Boolean {
-            return Settings.Global.putString(contentResolver, key, value)
-        }
+    fun setStringToGlobalSettings(contentResolver: ContentResolver, key: String, value: String): Boolean {
+        return Settings.Global.putString(contentResolver, key, value)
+    }
 
-        fun getStringFromSystemSettings(contentResolver: ContentResolver, key: String): String {
-            return Settings.System.getString(contentResolver, key)
-        }
+    fun getStringFromSystemSettings(contentResolver: ContentResolver, key: String): String? {
+        return Settings.System.getString(contentResolver, key)
+    }
 
-        fun setStringToSystemSettings(contentResolver: ContentResolver, key: String, value: String): Boolean {
-            return Settings.System.putString(contentResolver, key, value)
-        }
+    fun setStringToSystemSettings(contentResolver: ContentResolver, key: String, value: String): Boolean {
+        return Settings.System.putString(contentResolver, key, value)
     }
 }

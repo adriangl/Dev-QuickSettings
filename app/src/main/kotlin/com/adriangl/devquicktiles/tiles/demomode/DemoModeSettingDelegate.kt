@@ -23,18 +23,28 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import com.adriangl.devquicktiles.R
+import com.adriangl.devquicktiles.base.AppScope
 import com.adriangl.devquicktiles.tiles.DevelopmentSettingDelegate
 import com.adriangl.devquicktiles.utils.SettingsUtils
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
  * Created by adrian-macbook on 16/5/17.
  */
+@AppScope
 class DemoModeSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
+
+    companion object {
+        private const val DEFAULT_VALUE = "0"
+    }
+
+    private var demoModeInstance: DemoMode? = null
+
     override fun getSettingsUri(): List<Uri> {
         return listOf(
-                Settings.Global.getUriFor(DemoMode.DEMO_MODE_ALLOWED),
-                Settings.Global.getUriFor(DemoMode.DEMO_MODE_ON))
+            Settings.Global.getUriFor(DemoMode.DEMO_MODE_ALLOWED),
+            Settings.Global.getUriFor(DemoMode.DEMO_MODE_ON))
     }
 
     override fun isActive(value: String): Boolean {
@@ -47,32 +57,31 @@ class DemoModeSettingDelegate @Inject constructor(context: Context, contentResol
 
     override fun queryValue(): String {
         val value = listOf(DemoMode.DEMO_MODE_ALLOWED, DemoMode.DEMO_MODE_ON)
-                .fold(1, { current, key -> SettingsUtils.getStringFromGlobalSettings(contentResolver, key).toInt() and current })
+            .fold(1, { current, key -> (SettingsUtils.getStringFromGlobalSettings(contentResolver, key) ?: DEFAULT_VALUE).toInt() and current })
         return value.toString()
     }
 
     override fun saveValue(value: String): Boolean {
-        val isSettingEnabled =
-                listOf(DemoMode.DEMO_MODE_ALLOWED, DemoMode.DEMO_MODE_ON)
-                        .fold(true) {
-                            initial, setting ->
-                            initial && SettingsUtils.setStringToGlobalSettings(contentResolver, setting, value)
-                        }
-        if (isSettingEnabled) {
-            if (value.toInt() != 0) {
-                startDemoMode()
-            } else {
+        when (value.toInt()) {
+            0 -> {
+                // We're trying to disable Demo Mode, so exit and only then disable the system settings
                 stopDemoMode()
+                return saveDemoModeValue(value)
             }
-            return true
-        } else {
-            return false
+            1 -> {
+                // Save the setting first and then enable demo mode
+                saveDemoModeValue(value).let {
+                    startDemoMode()
+                    return true
+                }
+            }
+            else -> return false
         }
     }
 
     override fun getIcon(value: String): Icon? {
         return Icon.createWithResource(context,
-                if (value.toInt() != 0) R.drawable.ic_qs_demo_mode_enabled else R.drawable.ic_qs_demo_mode_disabled)
+            if (value.toInt() != 0) R.drawable.ic_qs_demo_mode_enabled else R.drawable.ic_qs_demo_mode_disabled)
     }
 
     override fun getLabel(value: String): CharSequence? {
@@ -86,52 +95,66 @@ class DemoModeSettingDelegate @Inject constructor(context: Context, contentResol
      * Check protocol here: https://github.com/android/platform_frameworks_base/blob/master/packages/SystemUI/docs/demo_mode.md
      */
     private fun startDemoMode() {
-        // Enable Demo mode (as per documentation, this is optional)
-        DemoMode.sendCommand(context, DemoMode.COMMAND_ENTER)
+        demoModeInstance = DemoMode.create {
+            clock {
+                hours = Build.VERSION.RELEASE.split(".")[0].toInt()
+                minutes = 0
+            }
 
-        // Set fixed time (use Android's major version for hours)
-        DemoMode.sendCommand(context, DemoMode.COMMAND_CLOCK) { intent ->
-            intent.putExtra("hhmm", "0${Build.VERSION.RELEASE.split(".")[0]}00")
-        }
+            network {
+                wifi {
+                    show = true
+                }
+                mobile {
+                    show = true
+                    level = 4
+                    dataType = Network.Mobile.DataType.TYPE_LTE
+                }
+                sims = 1
+                noSim = false
+                fully = true
+            }
 
-        // Set fixed network-related notification icons
-        DemoMode.sendCommand(context, DemoMode.COMMAND_NETWORK) { intent ->
-            intent.putExtra("wifi", "show")
-            intent.putExtra("mobile", "show")
-            intent.putExtra("sims", "1")
-            intent.putExtra("nosim", "false")
-            intent.putExtra("level", "4")
-            intent.putExtra("datatype", "")
-        }
+            battery {
+                level = 100
+                plugged = false
+            }
 
-        // Sets MCS state to fully connected (true, false)
-        // Need to send this after so that the sim controller already exists.
-        DemoMode.sendCommand(context, DemoMode.COMMAND_NETWORK) { intent ->
-            intent.putExtra("fully", "true")
-        }
+            status {
+                volume = Status.VolumeValues.HIDE
+                bluetooth = Status.BluetoothValues.HIDE
+                location = false
+                alarm = false
+                sync = false
+                tty = false
+                eri = false
+                mute = false
+                speakerPhone = false
+                managedProfile = false
+            }
 
-        // Set fixed battery options
-        DemoMode.sendCommand(context, DemoMode.COMMAND_BATTERY) { intent ->
-            intent.putExtra("level", "100")
-            intent.putExtra("plugged", "false")
-        }
-
-        // Hide other icons
-        DemoMode.sendCommand(context, DemoMode.COMMAND_STATUS) { intent ->
-            DemoMode.STATUS_ICONS.forEach { icon ->
-                intent.putExtra(icon, "hide")
+            notifications {
+                visible = false
             }
         }
 
-        // Hide notifications
-        DemoMode.sendCommand(context, DemoMode.COMMAND_NOTIFICATIONS) { intent ->
-            intent.putExtra("visible", "false")
+        demoModeInstance?.let {
+            Timber.d("DemoMode: starting demo mode with commands: ${demoModeInstance!!.getCommands()}")
+            demoModeInstance!!.enter(context)
         }
     }
 
     private fun stopDemoMode() {
         // Exit demo mode
-        DemoMode.sendCommand(context, DemoMode.COMMAND_EXIT)
+        demoModeInstance?.exit(context)
+    }
+
+    private fun saveDemoModeValue(value: String): Boolean {
+        return listOf(DemoMode.DEMO_MODE_ALLOWED, DemoMode.DEMO_MODE_ON)
+            .fold(true) {
+                initial, setting ->
+                initial && SettingsUtils.setStringToGlobalSettings(contentResolver, setting, value)
+            }
     }
 
 }

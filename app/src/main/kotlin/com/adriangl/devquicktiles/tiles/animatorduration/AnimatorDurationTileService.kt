@@ -16,6 +16,8 @@
 
 package com.adriangl.devquicktiles.tiles.animatorduration
 
+import com.adriangl.devquicktiles.base.AppScope
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 
+@AppScope
 class AnimatorDurationTileService : DevelopmentTileService()

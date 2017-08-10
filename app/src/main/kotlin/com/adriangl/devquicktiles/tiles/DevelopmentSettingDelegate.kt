@@ -20,6 +20,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.graphics.drawable.Icon
 import android.net.Uri
+import com.adriangl.devquicktiles.base.AppScope
 import com.adriangl.devquicktiles.tiles.animatorduration.AnimatorDurationSettingDelegate
 import com.adriangl.devquicktiles.tiles.animatorduration.AnimatorDurationTileService
 import com.adriangl.devquicktiles.tiles.demomode.DemoModeSettingDelegate
@@ -54,21 +55,27 @@ abstract class DevelopmentSettingDelegate constructor(val context: Context,
 
     @Module
     abstract class DevelopmentSettingDelegateModule {
+        @AppScope
         @Binds @ClassKey(AnimatorDurationTileService::class) @IntoMap
         abstract fun provideAnimatorDurationSettingDelegate(delegate: AnimatorDurationSettingDelegate): DevelopmentSettingDelegate
 
+        @AppScope
         @Binds @ClassKey(DemoModeTileService::class) @IntoMap
         abstract fun provideDemoModeSettingDelegate(delegate: DemoModeSettingDelegate): DevelopmentSettingDelegate
 
+        @AppScope
         @Binds @ClassKey(FinishActivitiesTileService::class) @IntoMap
         abstract fun provideFinishActivitiesSettingDelegate(delegate: FinishActivitiesSettingDelegate): DevelopmentSettingDelegate
 
+        @AppScope
         @Binds @ClassKey(KeepScreenOnTileService::class) @IntoMap
         abstract fun provideKeepScreenOnSettingDelegate(delegate: KeepScreenOnSettingDelegate): DevelopmentSettingDelegate
 
+        @AppScope
         @Binds @ClassKey(ShowTapsTileService::class) @IntoMap
         abstract fun provideShowTapsSettingDelegate(delegate: ShowTapsSettingDelegate): DevelopmentSettingDelegate
 
+        @AppScope
         @Binds @ClassKey(UsbDebuggingTileService::class) @IntoMap
         abstract fun provideUsbDebuggingSettingDelegate(delegate: UsbDebuggingSettingDelegate): DevelopmentSettingDelegate
     }

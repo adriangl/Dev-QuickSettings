@@ -23,6 +23,7 @@ import android.net.Uri
 import android.preference.PreferenceManager
 import android.provider.Settings
 import com.adriangl.devquicktiles.R
+import com.adriangl.devquicktiles.base.AppScope
 import com.adriangl.devquicktiles.tiles.DevelopmentSettingDelegate
 import com.adriangl.devquicktiles.utils.SettingsUtils
 import javax.inject.Inject
@@ -30,9 +31,11 @@ import javax.inject.Inject
 /**
  * Created by adrian-macbook on 23/5/17.
  */
+@AppScope
 class KeepScreenOnSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
     companion object {
-        val SETTING = Settings.Global.STAY_ON_WHILE_PLUGGED_IN
+        private const val SETTING = Settings.Global.STAY_ON_WHILE_PLUGGED_IN
+        private const val DEFAULT_VALUE = "0"
     }
 
     override fun isActive(value: String): Boolean {
@@ -41,13 +44,12 @@ class KeepScreenOnSettingDelegate @Inject constructor(context: Context, contentR
 
     override fun getValueList(): List<String> {
         val savedValue = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(context.getString(R.string.pref_keep_screen_on_key),
-                        context.getString(R.string.pref_keep_screen_on_mode_any_value))
+            .getString(context.getString(R.string.pref_keep_screen_on_key), context.getString(R.string.pref_keep_screen_on_mode_any_value))
         return listOf("0", savedValue)
     }
 
     override fun queryValue(): String {
-        return SettingsUtils.getStringFromGlobalSettings(contentResolver, SETTING)
+        return SettingsUtils.getStringFromGlobalSettings(contentResolver, SETTING) ?: DEFAULT_VALUE
     }
 
     override fun saveValue(value: String): Boolean {
@@ -56,8 +58,8 @@ class KeepScreenOnSettingDelegate @Inject constructor(context: Context, contentR
 
     override fun getIcon(value: String): Icon? {
         return Icon.createWithResource(context,
-                if (value.toInt() != 0) R.drawable.ic_qs_keep_screen_on_enabled
-                else R.drawable.ic_qs_keep_screen_on_disabled)
+            if (value.toInt() != 0) R.drawable.ic_qs_keep_screen_on_enabled
+            else R.drawable.ic_qs_keep_screen_on_disabled)
     }
 
     override fun getLabel(value: String): CharSequence? {

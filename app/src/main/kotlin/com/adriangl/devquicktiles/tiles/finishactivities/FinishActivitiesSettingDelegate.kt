@@ -22,6 +22,7 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.provider.Settings
 import com.adriangl.devquicktiles.R
+import com.adriangl.devquicktiles.base.AppScope
 import com.adriangl.devquicktiles.tiles.DevelopmentSettingDelegate
 import com.adriangl.devquicktiles.utils.SettingsUtils
 import javax.inject.Inject
@@ -29,9 +30,11 @@ import javax.inject.Inject
 /**
  * Created by adrian-macbook on 23/5/17.
  */
+@AppScope
 class FinishActivitiesSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
     companion object {
-        val SETTING = Settings.Global.ALWAYS_FINISH_ACTIVITIES
+        private const val SETTING = Settings.Global.ALWAYS_FINISH_ACTIVITIES
+        private const val DEFAULT_VALUE = "0"
     }
 
     override fun isActive(value: String): Boolean {
@@ -43,7 +46,7 @@ class FinishActivitiesSettingDelegate @Inject constructor(context: Context, cont
     }
 
     override fun queryValue(): String {
-        var value = SettingsUtils.getStringFromGlobalSettings(contentResolver, SETTING)
+        var value = SettingsUtils.getStringFromGlobalSettings(contentResolver, SETTING) ?: DEFAULT_VALUE
         if (value.toInt() > 1) value = "1"
         return value
     }
