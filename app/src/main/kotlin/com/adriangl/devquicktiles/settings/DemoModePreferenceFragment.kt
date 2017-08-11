@@ -48,10 +48,10 @@ class DemoModePreferenceFragment : PreferenceFragment() {
 
             // Set the summary to reflect the new value.
             preference.setSummary(
-                    if (index >= 0)
-                        listPreference.entries[index]
-                    else
-                        null)
+                if (index >= 0)
+                    listPreference.entries[index]
+                else
+                    null)
 
         } else if (preference is RingtonePreference) {
             // For ringtone preferences, look up the correct display value
@@ -62,7 +62,7 @@ class DemoModePreferenceFragment : PreferenceFragment() {
 
             } else {
                 val ringtone = RingtoneManager.getRingtone(
-                        preference.getContext(), Uri.parse(stringValue))
+                    preference.getContext(), Uri.parse(stringValue))
 
                 if (ringtone == null) {
                     // Clear the summary if there was a lookup error.
@@ -113,21 +113,22 @@ class DemoModePreferenceFragment : PreferenceFragment() {
 
      * @see .sBindPreferenceSummaryToValueListener
      */
+    @Suppress("MaxLineLength")
     private fun bindPreferenceSummaryToValue(preference: Preference,
-                                             listener: Preference.OnPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ -> true }) {
+                                             listener: Preference.OnPreferenceChangeListener
+                                             = Preference.OnPreferenceChangeListener { _, _ -> true }) {
         // Set the listener to watch for value changes.
         preference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener {
-            preference, newValue ->
-            listener.onPreferenceChange(preference, newValue) &&
-                    sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, newValue)
+            changedPreference, newValue ->
+            listener.onPreferenceChange(changedPreference, newValue) &&
+                sBindPreferenceSummaryToValueListener.onPreferenceChange(changedPreference, newValue)
         }
-
 
         // Trigger the listener immediately with the preference's
         // current value.
         sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.context)
-                        .getString(preference.key, ""))
+            PreferenceManager
+                .getDefaultSharedPreferences(preference.context)
+                .getString(preference.key, ""))
     }
 }

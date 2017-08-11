@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.adriangl.devquicktiles.tiles.finishactivities
+package com.adriangl.devquicktiles.tiles.screenon
 
 import android.content.ContentResolver
 import android.content.Context
@@ -29,10 +29,11 @@ import com.adriangl.devquicktiles.utils.SettingsUtils
 import javax.inject.Inject
 
 /**
- * Created by adrian-macbook on 23/5/17.
+ * A [DevelopmentSettingDelegate] that handles changing the "Keep screen on" development setting.
  */
 @AppScope
-class KeepScreenOnSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
+class KeepScreenOnSettingDelegate
+@Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
     companion object {
         private const val SETTING = Settings.Global.STAY_ON_WHILE_PLUGGED_IN
         private const val DEFAULT_VALUE = "0"

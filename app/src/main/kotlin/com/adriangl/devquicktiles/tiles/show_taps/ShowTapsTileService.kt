@@ -18,4 +18,7 @@ package com.adriangl.devquicktiles.tiles.show_taps
 
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 
+/**
+ * Tile that handles changing the "Show taps" development setting.
+ */
 class ShowTapsTileService : DevelopmentTileService()

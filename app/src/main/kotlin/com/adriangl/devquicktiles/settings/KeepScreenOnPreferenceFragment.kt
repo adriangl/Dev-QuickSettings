@@ -57,10 +57,10 @@ class KeepScreenOnPreferenceFragment : PreferenceFragment() {
 
             // Set the summary to reflect the new value.
             preference.setSummary(
-                    if (index >= 0)
-                        listPreference.entries[index]
-                    else
-                        null)
+                if (index >= 0)
+                    listPreference.entries[index]
+                else
+                    null)
 
         } else if (preference is RingtonePreference) {
             // For ringtone preferences, look up the correct display value
@@ -71,7 +71,7 @@ class KeepScreenOnPreferenceFragment : PreferenceFragment() {
 
             } else {
                 val ringtone = RingtoneManager.getRingtone(
-                        preference.getContext(), Uri.parse(stringValue))
+                    preference.getContext(), Uri.parse(stringValue))
 
                 if (ringtone == null) {
                     // Clear the summary if there was a lookup error.
@@ -135,9 +135,9 @@ class KeepScreenOnPreferenceFragment : PreferenceFragment() {
         preference.addOnPrefChangeListener(sBindPreferenceSummaryToValueListener)
         // Call the listener immediately after loading so it changes the summary value as soon as we enter the fragment
         sBindPreferenceSummaryToValueListener.onPreferenceChange(
-                preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.context)
-                        .getString(preference.key, ""))
+            preference,
+            PreferenceManager
+                .getDefaultSharedPreferences(preference.context)
+                .getString(preference.key, ""))
     }
 }

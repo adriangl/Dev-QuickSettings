@@ -16,48 +16,54 @@
 
 package com.adriangl.devquicktiles.tiles
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.preference.PreferenceManager
+import android.service.quicksettings.TileService
 import com.adriangl.devquicktiles.base.AppScope
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
+/**
+ * Basic implementation of [TileStatusController] that handles tile status and saves it in [android.content.SharedPreferences].
+ */
 @AppScope
-class TileStatusControllerImpl @Inject constructor(val context: Context) : TileStatusController {
+class TileStatusControllerImpl @Inject constructor(context: Context) : TileStatusController {
     val sharedPreferencesInstance = PreferenceManager.getDefaultSharedPreferences(context)!!
-    val tileStatusMap: HashMap<KClass<out DevelopmentTileService>, TileStatus> by lazy {
+    val tileStatusMap: HashMap<KClass<out TileService>, TileStatus> by lazy {
         unflattenStatusFromDisk()
     }
 
-    override fun setTileStatus(tileClass: KClass<out DevelopmentTileService>, tileStatus: TileStatus) {
+    override fun setTileStatus(tileClass: KClass<out TileService>, tileStatus: TileStatus) {
         // Save to memory map
         tileStatusMap[tileClass] = tileStatus
         // Save map to disk
         flattenStatusToDisk(tileStatusMap)
     }
 
-    override fun getTileStatus(tileClass: KClass<out DevelopmentTileService>): TileStatus? {
+    override fun getTileStatus(tileClass: KClass<out TileService>): TileStatus? {
         return tileStatusMap[tileClass]
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun unflattenStatusFromDisk(): HashMap<KClass<out DevelopmentTileService>, TileStatus> {
-        val tileStatusMap = hashMapOf<KClass<out DevelopmentTileService>, TileStatus>()
+    private fun unflattenStatusFromDisk(): HashMap<KClass<out TileService>, TileStatus> {
+        val tileStatusMap = hashMapOf<KClass<out TileService>, TileStatus>()
         val string = sharedPreferencesInstance.getString("tile_status", null)
         string?.split("|")?.forEach { flattenedStatus ->
             val splitStatus = flattenedStatus.split(":")
             tileStatusMap.put(
-                    Class.forName(splitStatus[0]).kotlin as KClass<out DevelopmentTileService>,
-                    TileStatus(
-                            splitStatus[1].toBoolean(),
-                            splitStatus[2].toInt(),
-                            splitStatus[3]))
+                Class.forName(splitStatus[0]).kotlin as KClass<out DevelopmentTileService>,
+                TileStatus(
+                    splitStatus[1].toBoolean(),
+                    splitStatus[2].toInt(),
+                    splitStatus[3]))
             return@forEach
         }
         return tileStatusMap
     }
 
-    private fun flattenStatusToDisk(tileStatusMap: HashMap<KClass<out DevelopmentTileService>, TileStatus>) {
+    @SuppressLint("CommitPrefEdits")
+    private fun flattenStatusToDisk(tileStatusMap: HashMap<KClass<out TileService>, TileStatus>) {
         val statusString = tileStatusMap.entries.map { (clazz, status) ->
             "%s:%s:%s:%s".format(clazz.qualifiedName, status.added, status.state, status.value)
         }.joinToString("|")

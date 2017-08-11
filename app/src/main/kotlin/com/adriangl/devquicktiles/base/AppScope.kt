@@ -18,7 +18,6 @@ package com.adriangl.devquicktiles.base
 
 import javax.inject.Scope
 
-
 /**
  * Created by adrian-macbook on 16/5/17.
  */

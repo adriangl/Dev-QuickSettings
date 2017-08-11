@@ -28,10 +28,11 @@ import com.adriangl.devquicktiles.utils.SettingsUtils
 import javax.inject.Inject
 
 /**
- * Created by adrian-macbook on 23/5/17.
+ * A [DevelopmentSettingDelegate] that handles enabling the "Don't keep activities" development setting.
  */
 @AppScope
-class FinishActivitiesSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
+class FinishActivitiesSettingDelegate
+@Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
     companion object {
         private const val SETTING = Settings.Global.ALWAYS_FINISH_ACTIVITIES
         private const val DEFAULT_VALUE = "0"
@@ -57,8 +58,8 @@ class FinishActivitiesSettingDelegate @Inject constructor(context: Context, cont
 
     override fun getIcon(value: String): Icon? {
         return Icon.createWithResource(context,
-                if (value.toInt() != 0) R.drawable.ic_qs_finish_activities_enabled
-                else R.drawable.ic_qs_finish_activities_disabled)
+            if (value.toInt() != 0) R.drawable.ic_qs_finish_activities_enabled
+            else R.drawable.ic_qs_finish_activities_disabled)
     }
 
     override fun getLabel(value: String): CharSequence? {

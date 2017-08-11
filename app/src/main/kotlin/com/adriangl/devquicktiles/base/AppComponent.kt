@@ -26,8 +26,9 @@ import dagger.Component
  */
 @AppScope
 @Component(modules = arrayOf(
-        App.AppModule::class,
-        DevelopmentSettingDelegate.DevelopmentSettingDelegateModule::class))
+    App.AppModule::class,
+    DevelopmentSettingDelegate.DevelopmentSettingDelegateModule::class))
+@Suppress("UndocumentedPublicFunction")
 interface AppComponent {
     fun settingsDelegateMap(): Map<Class<*>, DevelopmentSettingDelegate>
 

@@ -19,5 +19,10 @@ package com.adriangl.devquicktiles.tiles.animatorduration
 import com.adriangl.devquicktiles.base.AppScope
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 
+/**
+ * Tile that handles changing between different animator duration scales.
+ *
+ * Based on <a href="https://github.com/nickbutcher/AnimatorDurationTile">nickbutcher/AnimatorDurationTile</a>.
+ */
 @AppScope
 class AnimatorDurationTileService : DevelopmentTileService()

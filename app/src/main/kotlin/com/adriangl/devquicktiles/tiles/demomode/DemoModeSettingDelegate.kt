@@ -30,10 +30,11 @@ import timber.log.Timber
 import javax.inject.Inject
 
 /**
- * Created by adrian-macbook on 16/5/17.
+ * A [DevelopmentSettingDelegate] that handles enabling or disabling demo mode.
  */
 @AppScope
-class DemoModeSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
+class DemoModeSettingDelegate
+@Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
 
     companion object {
         private const val DEFAULT_VALUE = "0"
@@ -57,7 +58,9 @@ class DemoModeSettingDelegate @Inject constructor(context: Context, contentResol
 
     override fun queryValue(): String {
         val value = listOf(DemoMode.DEMO_MODE_ALLOWED, DemoMode.DEMO_MODE_ON)
-            .fold(1, { current, key -> (SettingsUtils.getStringFromGlobalSettings(contentResolver, key) ?: DEFAULT_VALUE).toInt() and current })
+            .fold(1, { current, key ->
+                (SettingsUtils.getStringFromGlobalSettings(contentResolver, key) ?: DEFAULT_VALUE).toInt() and current
+            })
         return value.toString()
     }
 
@@ -90,7 +93,7 @@ class DemoModeSettingDelegate @Inject constructor(context: Context, contentResol
 
     /**
      * Code adapted from AOSP:
-     * https://github.com/android/platform_frameworks_base/blob/marshmallow-mr3-release/packages/SystemUI/src/com/android/systemui/tuner/DemoModeFragment.java
+     * platform_frameworks_base/packages/SystemUI/src/com/android/systemui/tuner/DemoModeFragment.java
      *
      * Check protocol here: https://github.com/android/platform_frameworks_base/blob/master/packages/SystemUI/docs/demo_mode.md
      */

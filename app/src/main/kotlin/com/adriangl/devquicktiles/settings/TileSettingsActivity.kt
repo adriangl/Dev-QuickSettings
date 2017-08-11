@@ -16,7 +16,6 @@
 
 package com.adriangl.devquicktiles.settings
 
-
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.Configuration
@@ -35,9 +34,8 @@ import com.adriangl.devquicktiles.R
  * the list of settings.
  *
  *
- * See [
-   * Android Design: Settings](http://developer.android.com/design/patterns/settings.html) for design guidelines and the [Settings
-   * API Guide](http://developer.android.com/guide/topics/ui/settings.html) for more information on developing a Settings UI.
+ * See [Android Design: Settings](http://developer.android.com/design/patterns/settings.html) for design guidelines and the [Settings
+ * API Guide](http://developer.android.com/guide/topics/ui/settings.html) for more information on developing a Settings UI.
  */
 class TileSettingsActivity : AppCompatPreferenceActivity() {
 
@@ -50,7 +48,7 @@ class TileSettingsActivity : AppCompatPreferenceActivity() {
      * Set up the [android.app.ActionBar], if the API is available.
      */
     private fun setupActionBar() {
-        val actionBar = supportActionBar
+        val actionBar = getSupportActionBar()
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -82,8 +80,8 @@ class TileSettingsActivity : AppCompatPreferenceActivity() {
      */
     override fun isValidFragment(fragmentName: String): Boolean {
         return PreferenceFragment::class.java.name == fragmentName
-                || KeepScreenOnPreferenceFragment::class.java.name == fragmentName
-                || DemoModePreferenceFragment::class.java.name == fragmentName
+            || KeepScreenOnPreferenceFragment::class.java.name == fragmentName
+            || DemoModePreferenceFragment::class.java.name == fragmentName
     }
 
     /**
@@ -91,6 +89,7 @@ class TileSettingsActivity : AppCompatPreferenceActivity() {
      * example, 10" tablets are extra-large.
      */
     private fun isXLargeTablet(context: Context): Boolean {
-        return context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK >= Configuration.SCREENLAYOUT_SIZE_XLARGE
+        return (context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) >=
+            Configuration.SCREENLAYOUT_SIZE_XLARGE
     }
 }

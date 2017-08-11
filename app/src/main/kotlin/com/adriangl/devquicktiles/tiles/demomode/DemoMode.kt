@@ -21,6 +21,15 @@ import android.content.Intent
 import java.util.*
 import kotlin.properties.Delegates
 
+/**
+ * Annotation used to mark DSL scopes for [DemoMode] declarations.
+ */
+@DslMarker
+annotation class CommandDslMarker
+
+/**
+ * Basic class that holds a command definition in demo mode
+ */
 data class Command(val name: String = DemoMode.EXTRA_COMMAND, val value: String) {
     constructor(name: String, value: Boolean, show: Boolean = false) : this(name,
         if (show) {
@@ -30,21 +39,30 @@ data class Command(val name: String = DemoMode.EXTRA_COMMAND, val value: String)
     constructor(name: String, value: Any) : this(name, value.toString())
 }
 
-@DslMarker
-annotation class CommandDslMarker
-
+/**
+ * Base class that implements a hierarchical relationship between [Command]s.
+ */
 @CommandDslMarker
 abstract class CommandHolder {
     val children = mutableListOf<CommandHolder>()
 
+    /**
+     * Initializes a given [CommandHolder] and adds it to this holder's children.
+     */
     protected fun <T : CommandHolder> initCommand(commandHolder: T, init: T.() -> Unit): T {
         commandHolder.init()
         children.add(commandHolder)
         return commandHolder
     }
 
+    /**
+     * Returns the commands pertaining to this [CommandHolder] ignoring children.
+     */
     abstract fun getOwnCommands(): List<List<Command>>
 
+    /**
+     * Returns the list of all commands held by this [CommandHolder], including children.
+     */
     open fun getCommands(): List<List<Command>> {
         return getOwnCommands()
             .plus(
@@ -54,6 +72,9 @@ abstract class CommandHolder {
     }
 }
 
+/**
+ * [CommandHolder] for battery-related parameters.
+ */
 class Battery(var plugged: Boolean? = null) : CommandHolder() {
     var level: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 0..100 }
 
@@ -66,6 +87,9 @@ class Battery(var plugged: Boolean? = null) : CommandHolder() {
     }
 }
 
+/**
+ * [CommandHolder] for network-related parameters.
+ */
 class Network(var airplane: Boolean? = null,
               var fully: Boolean? = null,
               var carrierNetworkChange: Boolean? = null,
@@ -106,6 +130,9 @@ class Network(var airplane: Boolean? = null,
         return commandSetList
     }
 
+    /**
+     * [CommandHolder] for WiFi-related parameters.
+     */
     class Wifi(var show: Boolean? = null) : CommandHolder() {
         var level: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 0..4 }
 
@@ -120,9 +147,16 @@ class Network(var airplane: Boolean? = null,
         }
     }
 
+    /**
+     * [CommandHolder] for mobile networks-related parameters.
+     */
     class Mobile(var show: Boolean? = null, var dataType: DataType? = null) : CommandHolder() {
         var level: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 0..4 }
 
+        /**
+         * Enumerates possible data values for data type.
+         */
+        @SuppressWarnings("UndocumentedPublicClass")
         enum class DataType(val value: String) {
             TYPE_1X("1x"),
             TYPE_3G("3g"),
@@ -148,12 +182,25 @@ class Network(var airplane: Boolean? = null,
         }
     }
 
+    /**
+     * Sets Wi-Fi related parameters.
+     */
     fun wifi(init: Wifi.() -> Unit): Wifi = initCommand(Wifi(), init)
 
+    /**
+     * Sets mobile networks related parameters.
+     */
     fun mobile(init: Mobile.() -> Unit): Mobile = initCommand(Mobile(), init)
 }
 
+/**
+ * [CommandHolder] for status bar related parameters.
+ */
 class Bars(var mode: Mode? = null) : CommandHolder() {
+    /**
+     * Enumerates possible values for the mode parameter.
+     */
+    @SuppressWarnings("UndocumentedPublicClass")
     enum class Mode(val value: String) {
         OPAQUE("opaque"),
         SEMI_TRANSPARENT("semi-transparent"),
@@ -168,6 +215,9 @@ class Bars(var mode: Mode? = null) : CommandHolder() {
     }
 }
 
+/**
+ * [CommandHolder] for status bar related icon visibilities and states.
+ */
 class Status(var volume: VolumeValues? = null,
              var bluetooth: BluetoothValues? = null,
              var location: Boolean? = null,
@@ -180,12 +230,20 @@ class Status(var volume: VolumeValues? = null,
              var speakerPhone: Boolean? = null,
              var managedProfile: Boolean? = null) : CommandHolder() {
 
+    /**
+     * Enumerates possible values for volume icon.
+     */
+    @SuppressWarnings("UndocumentedPublicClass")
     enum class VolumeValues(val value: String) {
         SILENT("silent"),
         VIBRATE("vibrate"),
         HIDE("hide")
     }
 
+    /**
+     * Enumerates possible valies for Bluetooth icon.
+     */
+    @SuppressWarnings("UndocumentedPublicClass")
     enum class BluetoothValues(val value: String) {
         CONNECTED("connected"),
         DISCONNECTED("disconnected"),
@@ -210,6 +268,9 @@ class Status(var volume: VolumeValues? = null,
     }
 }
 
+/**
+ * [CommandHolder] for notification icons visibility parameters.
+ */
 class Notifications(var visible: Boolean? = null) : CommandHolder() {
     override fun getOwnCommands(): List<List<Command>> {
         return listOf(mutableListOf<Command>().apply {
@@ -219,6 +280,9 @@ class Notifications(var visible: Boolean? = null) : CommandHolder() {
     }
 }
 
+/**
+ * [CommandHolder] for clock-related parameters.
+ */
 class Clock : CommandHolder() {
     var hours: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 0..23 }
     var minutes: Int? by Delegates.vetoable(null as Int?) { _, _, newValue -> newValue in 0..59 }
@@ -236,10 +300,12 @@ class Clock : CommandHolder() {
 }
 
 /**
+ * Main class to create demo mode builders.
+ *
  * Code adapted from AOSP:
  * https://github.com/android/platform_frameworks_base/blob/marshmallow-mr3-release/packages/SystemUI/src/com/android/systemui/DemoMode.java
  */
-class DemoMode : CommandHolder() {
+class DemoMode private constructor() : CommandHolder() {
     companion object {
         // Indicates that the demo mode is allowed, but it doesn't mean that it's active
         val DEMO_MODE_ALLOWED = "sysui_demo_allowed"
@@ -252,16 +318,9 @@ class DemoMode : CommandHolder() {
         // Various commands to use to control demo mode
         val EXTRA_COMMAND = "command"
 
-        val COMMAND_ENTER = "enter"
-        val COMMAND_EXIT = "exit"
-        val COMMAND_CLOCK = "clock"
-        val COMMAND_BATTERY = "battery"
-        val COMMAND_NETWORK = "network"
-        val COMMAND_BARS = "bars"
-        val COMMAND_STATUS = "status"
-        val COMMAND_NOTIFICATIONS = "notifications"
-        val COMMAND_VOLUME = "volume"
-
+        /**
+         * Creates a new instance of [DemoMode].
+         */
         fun create(init: DemoMode.() -> Unit): DemoMode {
             val demoModeDsl = DemoMode()
             demoModeDsl.init()
@@ -273,18 +332,39 @@ class DemoMode : CommandHolder() {
         return emptyList()
     }
 
+    /**
+     * Sets battery parameters
+     */
     fun battery(init: Battery.() -> Unit): Battery = initCommand(Battery(), init)
 
+    /**
+     * Sets network parameters.
+     */
     fun network(init: Network.() -> Unit): Network = initCommand(Network(), init)
 
+    /**
+     * Sets status bar state parameters
+     */
     fun bars(init: Bars.() -> Unit): Bars = initCommand(Bars(), init)
 
+    /**
+     * Sets status bar phone status parameters
+     */
     fun status(init: Status.() -> Unit): Status = initCommand(Status(), init)
 
+    /**
+     * Sets notification parameters
+     */
     fun notifications(init: Notifications.() -> Unit): Notifications = initCommand(Notifications(), init)
 
+    /**
+     * Sets clock parameters
+     */
     fun clock(init: Clock.() -> Unit): Clock = initCommand(Clock(), init)
 
+    /**
+     * Enters demo mode. This requires enabling the demo mode first.
+     */
     fun enter(ctx: Context) {
         sendCommandList(ctx, listOf(Command(value = "enter")))
         getCommands().forEach { commandList ->
@@ -292,6 +372,9 @@ class DemoMode : CommandHolder() {
         }
     }
 
+    /**
+     * Exits demo mode. This requires enabling the demo mode first.
+     */
     fun exit(ctx: Context) {
         // Just launch the exit intent
         sendCommandList(ctx, listOf(Command(value = "exit")))

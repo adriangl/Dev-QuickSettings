@@ -27,8 +27,12 @@ import com.adriangl.devquicktiles.tiles.DevelopmentSettingDelegate
 import com.adriangl.devquicktiles.utils.SettingsUtils
 import javax.inject.Inject
 
+/**
+ * A [DevelopmentSettingDelegate] that handles animator duration setting.
+ */
 @AppScope
-class AnimatorDurationSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
+class AnimatorDurationSettingDelegate
+@Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
 
     companion object {
         private const val SETTING = Settings.Global.ANIMATOR_DURATION_SCALE

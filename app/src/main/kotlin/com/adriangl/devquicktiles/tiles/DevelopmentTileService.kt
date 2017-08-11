@@ -27,6 +27,9 @@ import com.adriangl.devquicktiles.base.App
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Base [TileService] to extend to create a new "Development options" based QuickSettings tile.
+ */
 abstract class DevelopmentTileService : TileService() {
 
     @Inject lateinit var tileStatusController: TileStatusController
@@ -86,10 +89,10 @@ abstract class DevelopmentTileService : TileService() {
         val newIndex = ((valueList.indexOf(value) + 1) % valueList.size)
         val newValue = valueList[newIndex]
         Timber.d("New value: %s for tile: {label=%s, state=%s, value=%s}",
-                newValue,
-                qsTile.label,
-                qsTile.state,
-                value)
+            newValue,
+            qsTile.label,
+            qsTile.state,
+            value)
 
         // Disable tile while setting the value
         qsTile.state = Tile.STATE_UNAVAILABLE
@@ -107,7 +110,7 @@ abstract class DevelopmentTileService : TileService() {
         } catch (e: Exception) {
             val permissionNotGrantedString = getString(R.string.qs_permissions_not_granted)
             Toast.makeText(applicationContext, permissionNotGrantedString, Toast.LENGTH_LONG)
-                    .show()
+                .show()
             Timber.e(e, permissionNotGrantedString)
         }
     }

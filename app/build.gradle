@@ -14,10 +14,33 @@
  * limitations under the License.
  */
 
+/**
+ * We have to add this buildscript here to call detekt from the app project
+ */
+buildscript {
+    ext.detekt_version = "1.0.0.RC1"
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
+    }
+}
+
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "io.gitlab.arturbosch.detekt"
 apply from: "$rootDir/common.gradle"
+
+detekt {
+    version detekt_version
+    profile("main") {
+        input = "$projectDir/src/main/kotlin"
+        config = "$project.rootDir/detekt-config.yml"
+        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    }
+}
 
 android {
     compileSdkVersion 25
@@ -68,6 +91,7 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
 }
-repositories {
-    mavenCentral()
-}
+
+// Run checks before compiling
+preBuild.dependsOn detektCheck
+detektCheck.dependsOn detektFormat

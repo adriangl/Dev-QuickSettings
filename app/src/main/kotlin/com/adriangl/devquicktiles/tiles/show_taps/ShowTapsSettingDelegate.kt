@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.adriangl.devquicktiles.tiles.finishactivities
+package com.adriangl.devquicktiles.tiles.show_taps
 
 import android.content.ContentResolver
 import android.content.Context
@@ -28,10 +28,11 @@ import com.adriangl.devquicktiles.utils.SettingsUtils
 import javax.inject.Inject
 
 /**
- * Created by adrian-macbook on 23/5/17.
+ * A [DevelopmentSettingDelegate] that handles changing the "Show taps" development setting.
  */
 @AppScope
-class ShowTapsSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
+class ShowTapsSettingDelegate
+@Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
     companion object {
         private const val SETTING = "show_touches" // This is hidden for developers, so we use the string resource
         private const val DEFAULT_VALUE = "0"

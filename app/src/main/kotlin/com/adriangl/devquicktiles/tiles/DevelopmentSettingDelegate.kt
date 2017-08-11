@@ -25,9 +25,13 @@ import com.adriangl.devquicktiles.tiles.animatorduration.AnimatorDurationSetting
 import com.adriangl.devquicktiles.tiles.animatorduration.AnimatorDurationTileService
 import com.adriangl.devquicktiles.tiles.demomode.DemoModeSettingDelegate
 import com.adriangl.devquicktiles.tiles.demomode.DemoModeTileService
-import com.adriangl.devquicktiles.tiles.finishactivities.*
+import com.adriangl.devquicktiles.tiles.finishactivities.FinishActivitiesSettingDelegate
+import com.adriangl.devquicktiles.tiles.finishactivities.FinishActivitiesTileService
+import com.adriangl.devquicktiles.tiles.screenon.KeepScreenOnSettingDelegate
 import com.adriangl.devquicktiles.tiles.screenon.KeepScreenOnTileService
+import com.adriangl.devquicktiles.tiles.show_taps.ShowTapsSettingDelegate
 import com.adriangl.devquicktiles.tiles.show_taps.ShowTapsTileService
+import com.adriangl.devquicktiles.tiles.usbdebug.UsbDebuggingSettingDelegate
 import com.adriangl.devquicktiles.tiles.usbdebug.UsbDebuggingTileService
 import dagger.Binds
 import dagger.Module
@@ -35,25 +39,47 @@ import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 
 /**
- * Created by adrian-macbook on 16/5/17.
+ * Base class to implement settings delegate.
  */
 abstract class DevelopmentSettingDelegate constructor(val context: Context,
                                                       val contentResolver: ContentResolver) {
+    /**
+     * Returns if the tile is in an "active" state.
+     */
     abstract fun isActive(value: String): Boolean
 
+    /**
+     * Returns the possible values that the tile can have.
+     */
     abstract fun getValueList(): List<String>
 
+    /**
+     * Queries the value that the tile service holds.
+     */
     abstract fun queryValue(): String
 
+    /**
+     * Saves the given tile value.
+     */
     abstract fun saveValue(value: String): Boolean
 
+    /**
+     * Returns an [Icon] for a given tile value. May be null.
+     */
     abstract fun getIcon(value: String): Icon?
 
+    /**
+     * Returns a [CharSequence] for a given tile value. May be null.
+     */
     abstract fun getLabel(value: String): CharSequence?
 
+    /**
+     * Returns a list of [Uri]s that the tile uses to save values.
+     */
     abstract fun getSettingsUri(): List<Uri>
 
     @Module
+    @Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction", "unused")
     abstract class DevelopmentSettingDelegateModule {
         @AppScope
         @Binds @ClassKey(AnimatorDurationTileService::class) @IntoMap

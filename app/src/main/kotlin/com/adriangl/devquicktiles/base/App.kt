@@ -26,6 +26,9 @@ import dagger.Module
 import dagger.Provides
 import timber.log.Timber
 
+/**
+ * Base [Application] class for this app.
+ */
 class App : Application() {
     companion object {
         lateinit var component: AppComponent
@@ -36,8 +39,8 @@ class App : Application() {
         super.onCreate()
 
         component = DaggerAppComponent.builder()
-                .appModule(AppModule(this))
-                .build()
+            .appModule(AppModule(this))
+            .build()
 
         // Init Timber in debug builds
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
@@ -46,6 +49,7 @@ class App : Application() {
     /**
      * Global app dependencies
      */
+    @Suppress("UndocumentedPublicFunction")
     @Module
     class AppModule(val app: App) {
         @Provides @AppScope

@@ -18,4 +18,7 @@ package com.adriangl.devquicktiles.tiles.usbdebug
 
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 
+/**
+ * Tile that handles changing the "USB debugging" development setting.
+ */
 class UsbDebuggingTileService : DevelopmentTileService()

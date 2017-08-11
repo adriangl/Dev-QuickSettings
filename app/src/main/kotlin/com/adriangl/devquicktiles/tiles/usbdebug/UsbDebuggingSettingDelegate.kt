@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.adriangl.devquicktiles.tiles.finishactivities
+package com.adriangl.devquicktiles.tiles.usbdebug
 
 import android.content.ContentResolver
 import android.content.Context
@@ -28,10 +28,11 @@ import com.adriangl.devquicktiles.utils.SettingsUtils
 import javax.inject.Inject
 
 /**
- * Created by adrian-macbook on 23/5/17.
+ * A [DevelopmentSettingDelegate] that handles changing the "USB debugging" development setting.
  */
 @AppScope
-class UsbDebuggingSettingDelegate @Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
+class UsbDebuggingSettingDelegate
+@Inject constructor(context: Context, contentResolver: ContentResolver) : DevelopmentSettingDelegate(context, contentResolver) {
     companion object {
         private const val SETTING = Settings.Global.ADB_ENABLED
         private const val DEFAULT_VALUE = "0"

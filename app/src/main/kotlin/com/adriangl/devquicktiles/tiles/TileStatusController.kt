@@ -16,6 +16,7 @@
 
 package com.adriangl.devquicktiles.tiles
 
+import android.service.quicksettings.TileService
 import kotlin.reflect.KClass
 
 /**
@@ -23,9 +24,12 @@ import kotlin.reflect.KClass
  */
 interface TileStatusController {
     /**
-     *
+     * Stores the current tile status.
      */
-    fun setTileStatus(tileClass: KClass<out DevelopmentTileService>, tileStatus: TileStatus)
+    fun setTileStatus(tileClass: KClass<out TileService>, tileStatus: TileStatus)
 
-    fun getTileStatus(tileClass: KClass<out DevelopmentTileService>): TileStatus?
+    /**
+     * Retrieves the saved status for a given tile
+     */
+    fun getTileStatus(tileClass: KClass<out TileService>): TileStatus?
 }

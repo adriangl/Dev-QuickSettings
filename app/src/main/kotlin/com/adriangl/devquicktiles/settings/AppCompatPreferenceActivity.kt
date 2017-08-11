@@ -54,9 +54,33 @@ abstract class AppCompatPreferenceActivity : PreferenceActivity() {
         delegate.onPostCreate(savedInstanceState)
     }
 
-    val supportActionBar: ActionBar?
-        get() = delegate.supportActionBar
+    /**
+     * Support library version of [android.app.Activity.getActionBar].
+     *
+     * <p>Retrieve a reference to this activity's ActionBar.
+     *
+     * @return The Activity's ActionBar, or null if it does not have one.
+     */
+    fun getSupportActionBar(): ActionBar? {
+        return delegate.supportActionBar
+    }
 
+    /**
+     * Set a [android.widget.Toolbar] to act as the
+     * [android.support.v7.app.ActionBar] for this Activity window.
+     *
+     * <p>When set to a non-null value the [getSupportActionBar] method will return
+     * an [android.support.v7.app.ActionBar] object that can be used to control the given
+     * toolbar as if it were a traditional window decor action bar. The toolbar's menu will be
+     * populated with the Activity's options menu and the navigation button will be wired through
+     * the standard [android.R.id.home] menu select action.</p>
+     *
+     * <p>In order to use a Toolbar within the Activity's window content the application
+     * must not request the window feature
+     * [android.view.Window.FEATURE_ACTION_BAR].</p>
+     *
+     * @param toolbar Toolbar to set as the Activity's action bar, or null to clear it
+     */
     fun setSupportActionBar(toolbar: Toolbar?) {
         delegate.setSupportActionBar(toolbar)
     }

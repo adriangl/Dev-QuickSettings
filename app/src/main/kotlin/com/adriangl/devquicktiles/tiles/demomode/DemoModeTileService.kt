@@ -18,4 +18,12 @@ package com.adriangl.devquicktiles.tiles.demomode
 
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 
+/**
+ * Tile that handles changing the "Demo mode" development setting.
+ *
+ * Code adapted from AOSP:
+ * https://github.com/android/platform_frameworks_base/blob/master/packages/SystemUI/src/com/android/systemui/tuner/DemoModeFragment.java
+ *
+ * Check protocol here: https://github.com/android/platform_frameworks_base/blob/master/packages/SystemUI/docs/demo_mode.md
+ */
 class DemoModeTileService : DevelopmentTileService()

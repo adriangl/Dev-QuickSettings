@@ -18,4 +18,7 @@ package com.adriangl.devquicktiles.tiles.screenon
 
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 
+/**
+ * Tile that handles changing the "Keep screen on" development setting.
+ */
 class KeepScreenOnTileService : DevelopmentTileService()

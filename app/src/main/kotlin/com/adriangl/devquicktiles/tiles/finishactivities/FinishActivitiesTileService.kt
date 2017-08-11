@@ -18,4 +18,7 @@ package com.adriangl.devquicktiles.tiles.finishactivities
 
 import com.adriangl.devquicktiles.tiles.DevelopmentTileService
 
+/**
+ * Tile that handles changing the "Don't keep activities" development setting.
+ */
 class FinishActivitiesTileService : DevelopmentTileService()
