@@ -21,13 +21,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.adriangl.devquicktiles.R
-import java.util.*
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.qs_description_item.*
 
 /**
  * Adapter used to display [QsDescriptionsItem]s.
  */
-class QsDescriptionsRecyclerViewAdapter : RecyclerView.Adapter<QsDescriptionsRecyclerViewHolder>() {
-    val items = ArrayList<QsDescriptionsItem>()
+class QsDescriptionsRecyclerViewAdapter(private val items: MutableList<QsDescriptionsItem> = mutableListOf())
+    : RecyclerView.Adapter<QsDescriptionsRecyclerViewAdapter.ViewHolder>() {
 
     /**
      * Sets the items to display by this adapter.
@@ -37,19 +38,21 @@ class QsDescriptionsRecyclerViewAdapter : RecyclerView.Adapter<QsDescriptionsRec
         items.addAll(list)
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QsDescriptionsRecyclerViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val itemView: View = LayoutInflater.from(parent?.context).inflate(R.layout.qs_description_item, parent, false)
-        return QsDescriptionsRecyclerViewHolder(itemView)
+        return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: QsDescriptionsRecyclerViewHolder?, position: Int) {
-        holder?.itemTitle?.text = items[position].title
-        holder?.itemDescription?.text = items[position].description
-        holder?.itemIcon?.setImageResource(items[position].iconResource)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.qs_title.text = items[position].title
+        holder.qs_description.text = items[position].description
+        holder.qs_icon.setImageResource(items[position].iconResource)
     }
 
+    /**
+     * [RecyclerView.ViewHolder] used to display [QsDescriptionsItem]s.
+     */
+    class ViewHolder(itemView: View?, override val containerView: View? = itemView) : RecyclerView.ViewHolder(itemView), LayoutContainer
 }
