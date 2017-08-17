@@ -19,13 +19,24 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!-- Dimens related to "Grant permissions" reminder -->
     <dimen name="main_permissions_content_margin">8dp</dimen>
     <dimen name="grant_permissions_dialog_margin">8dp</dimen>
     <dimen name="grant_permissions_dialog_container_padding">16dp</dimen>
     <dimen name="grant_permissions_dialog_container_item_margin">8dp</dimen>
 
+    <!-- Dimens related to Quick settings display in Main Activity -->
     <dimen name="qs_description_item_image_size">56dp</dimen>
+
+    <!-- Dimens related to navigation drawer -->
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Dimens related to app settings -->
+    <dimen name="settings_header_item_icon_frame_width">60dp</dimen>
+    <dimen name="settings_header_item_icon_frame_padding_bottom">4dp</dimen>
+    <dimen name="settings_header_item_icon_frame_padding_end">12dp</dimen>
+    <dimen name="settings_header_item_icon_frame_padding_top">4dp</dimen>
+    <dimen name="settings_header_item_icon_max_size">48dp</dimen>
+    <dimen name="settings_header_item_text_padding">16dp</dimen>
 </resources>

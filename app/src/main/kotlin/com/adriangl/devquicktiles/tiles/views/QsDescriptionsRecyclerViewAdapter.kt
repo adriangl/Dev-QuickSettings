@@ -54,5 +54,5 @@ class QsDescriptionsRecyclerViewAdapter(private val items: MutableList<QsDescrip
     /**
      * [RecyclerView.ViewHolder] used to display [QsDescriptionsItem]s.
      */
-    class ViewHolder(itemView: View?, override val containerView: View? = itemView) : RecyclerView.ViewHolder(itemView), LayoutContainer
+    class ViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView), LayoutContainer
 }

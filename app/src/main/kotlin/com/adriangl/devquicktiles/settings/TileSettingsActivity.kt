@@ -23,17 +23,17 @@ import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceActivity
 import android.preference.PreferenceFragment
+import android.support.annotation.LayoutRes
 import android.support.v4.app.NavUtils
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.ListAdapter
-import android.widget.TextView
 import com.adriangl.devquicktiles.R
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.activity_settings_header_item.*
 
 /**
  * A [PreferenceActivity] that presents a set of application settings. On
@@ -62,51 +62,49 @@ class TileSettingsActivity : AppCompatPreferenceActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    /** {@inheritDoc}  */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    override fun onBuildHeaders(target: List<PreferenceActivity.Header>) {
+        loadHeadersFromResource(R.xml.pref_headers, target)
+        headers = mutableListOf<PreferenceActivity.Header>().apply { addAll(target) }
+    }
+
     override fun setListAdapter(adapter: ListAdapter) {
         if (headers == null) {
             headers = ArrayList()
             // When the saved state provides the list of headers, onBuildHeaders is not called
             // so we build it from the adapter given, then use our own adapter
 
-            for (i in 0..adapter.count) {
+            for (i in 0 until adapter.count) {
                 headers!!.add(adapter.getItem(i) as PreferenceActivity.Header)
             }
         }
 
-        super.setListAdapter(HeaderAdapter(this, headers!!, android.R.layout.simple_list_item_1, true))
+        super.setListAdapter(HeaderAdapter(this, headers!!, R.layout.activity_settings_header_item, true))
     }
 
-    override fun onMenuItemSelected(featureId: Int, item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == android.R.id.home) {
-            if (!super.onMenuItemSelected(featureId, item)) {
-                NavUtils.navigateUpFromSameTask(this)
+    override fun onMenuItemSelected(featureId: Int, item: MenuItem): Boolean =
+        when (item.itemId) {
+            (android.R.id.home) -> {
+                if (!super.onMenuItemSelected(featureId, item)) {
+                    NavUtils.navigateUpFromSameTask(this)
+                }
+                true
             }
-            return true
+            else -> super.onMenuItemSelected(featureId, item)
         }
-        return super.onMenuItemSelected(featureId, item)
-    }
 
     /** {@inheritDoc}  */
-    override fun onIsMultiPane(): Boolean {
-        return isXLargeTablet(this)
-    }
-
-    /** {@inheritDoc}  */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    override fun onBuildHeaders(target: List<PreferenceActivity.Header>) {
-        headers = mutableListOf<PreferenceActivity.Header>().apply { addAll(target) }
-        loadHeadersFromResource(R.xml.pref_headers, target)
-    }
+    override fun onIsMultiPane(): Boolean = isXLargeTablet(this)
 
     /**
      * This method stops fragment injection in malicious applications.
      * Make sure to deny any unknown fragments here.
      */
     override fun isValidFragment(fragmentName: String): Boolean {
-        return PreferenceFragment::class.java.name == fragmentName
-            || KeepScreenOnPreferenceFragment::class.java.name == fragmentName
-            || DemoModePreferenceFragment::class.java.name == fragmentName
+        return PreferenceFragment::class.qualifiedName == fragmentName
+            || KeepScreenOnPreferenceFragment::class.qualifiedName == fragmentName
+            || DemoModePreferenceFragment::class.qualifiedName == fragmentName
     }
 
     /**
@@ -118,28 +116,23 @@ class TileSettingsActivity : AppCompatPreferenceActivity() {
             Configuration.SCREENLAYOUT_SIZE_XLARGE
     }
 
-    private class HeaderAdapter(context: Context, objects: List<Header>, private val mLayoutResId: Int,
-                                private val mRemoveIconIfEmpty: Boolean) : ArrayAdapter<Header>(context, 0, objects) {
-        private class HeaderViewHolder {
-            internal var icon: ImageView? = null
-            internal var title: TextView? = null
-            internal var summary: TextView? = null
-        }
+    /**
+     * Custom Header adapter that allows adding a custom layout.
+     */
+    private class HeaderAdapter(context: Context, objects: List<Header>, @LayoutRes private val layoutResId: Int,
+                                private val removeIconIfEmpty: Boolean) : ArrayAdapter<Header>(context, 0, objects) {
 
-        private val mInflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        private class HeaderViewHolder(override val containerView: View?) : LayoutContainer
+
+        private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val holder: HeaderViewHolder
             val view: View
 
             if (convertView == null) {
-                view = mInflater.inflate(mLayoutResId, parent, false)
-                holder = HeaderViewHolder()
-                /*
-                holder.icon = view.findViewById(com.android.internal.R.id.icon) as ImageView
-                holder.title = view.findViewById(com.android.internal.R.id.title) as TextView
-                holder.summary = view.findViewById(com.android.internal.R.id.summary) as TextView
-                */
+                view = inflater.inflate(layoutResId, parent, false)
+                holder = HeaderViewHolder(view)
                 view.tag = holder
             } else {
                 view = convertView
@@ -147,24 +140,27 @@ class TileSettingsActivity : AppCompatPreferenceActivity() {
             }
 
             // All view fields must be updated every time, because the view may be recycled
-            val header = getItem(position)
-            if (mRemoveIconIfEmpty) {
-                if (header!!.iconRes == 0) {
-                    holder.icon!!.visibility = View.GONE
+            val header: Header = getItem(position)
+
+            if (removeIconIfEmpty) {
+                if (header.iconRes == 0) {
+                    holder.icon.visibility = View.GONE
                 } else {
-                    holder.icon!!.visibility = View.VISIBLE
-                    holder.icon!!.setImageResource(header.iconRes)
+                    holder.icon.visibility = View.VISIBLE
+                    holder.icon.setImageResource(header.iconRes)
                 }
             } else {
-                holder.icon!!.setImageResource(header!!.iconRes)
+                holder.icon.setImageResource(header.iconRes)
             }
-            holder.title!!.text = header.getTitle(context.resources)
+
+            holder.title.text = header.getTitle(context.resources)
+
             val summary = header.getSummary(context.resources)
-            if (!TextUtils.isEmpty(summary)) {
-                holder.summary!!.visibility = View.VISIBLE
-                holder.summary!!.text = summary
+            if (!summary.isNullOrBlank()) {
+                holder.summary.visibility = View.VISIBLE
+                holder.summary.text = summary
             } else {
-                holder.summary!!.visibility = View.GONE
+                holder.summary.visibility = View.GONE
             }
 
             return view
