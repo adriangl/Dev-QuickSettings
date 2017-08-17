@@ -328,9 +328,7 @@ class DemoMode private constructor() : CommandHolder() {
         }
     }
 
-    override fun getOwnCommands(): List<List<Command>> {
-        return emptyList()
-    }
+    override fun getOwnCommands(): List<List<Command>> = emptyList()
 
     /**
      * Sets battery parameters

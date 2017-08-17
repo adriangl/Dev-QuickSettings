@@ -18,17 +18,17 @@ package com.adriangl.devquicktiles.settings
 
 import android.annotation.TargetApi
 import android.content.Intent
-import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.preference.*
-import android.text.TextUtils
+import android.preference.ListPreference
+import android.preference.Preference
+import android.preference.PreferenceFragment
+import android.preference.PreferenceManager
 import android.view.MenuItem
 import com.adriangl.devquicktiles.R
 
 /**
- * This fragment shows notification preferences only. It is used when the
+ * This fragment shows demo mode preferences only. It is used when the
  * activity is showing a two-pane settings UI.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -53,28 +53,6 @@ class DemoModePreferenceFragment : PreferenceFragment() {
                 else
                     null)
 
-        } else if (preference is RingtonePreference) {
-            // For ringtone preferences, look up the correct display value
-            // using RingtoneManager.
-            if (TextUtils.isEmpty(stringValue)) {
-                // Empty values correspond to 'silent' (no ringtone).
-                preference.setSummary(R.string.pref_ringtone_silent)
-
-            } else {
-                val ringtone = RingtoneManager.getRingtone(
-                    preference.getContext(), Uri.parse(stringValue))
-
-                if (ringtone == null) {
-                    // Clear the summary if there was a lookup error.
-                    preference.setSummary(null)
-                } else {
-                    // Set the summary to reflect the new ringtone display
-                    // name.
-                    val name = ringtone.getTitle(preference.getContext())
-                    preference.setSummary(name)
-                }
-            }
-
         } else {
             // For all other preferences, set the summary to the value's
             // simple string representation.
@@ -92,7 +70,7 @@ class DemoModePreferenceFragment : PreferenceFragment() {
         // to their values. When their values change, their summaries are
         // updated to reflect the new value, per the Android Design
         // guidelines.
-        bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"))
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_demo_mode_battery_level_key)))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

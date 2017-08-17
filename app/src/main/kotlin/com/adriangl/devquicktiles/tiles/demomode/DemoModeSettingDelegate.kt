@@ -128,6 +128,7 @@ class DemoModeSettingDelegate
                 bluetooth = Status.BluetoothValues.HIDE
                 location = false
                 alarm = false
+                zen = false
                 sync = false
                 tty = false
                 eri = false

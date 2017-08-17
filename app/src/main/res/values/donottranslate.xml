@@ -38,4 +38,8 @@
         <item>@string/pref_keep_screen_on_mode_any_value</item> <!-- BatteryManager.BATTERY_ANY -->
     </string-array>
 
+    <string name="pref_demo_mode_battery_header">pref_demo_mode_battery</string>
+    <string name="pref_demo_mode_battery_level_key">pref_demo_mode_battery_level</string>
+    <string name="pref_demo_mode_battery_plugged_key">pref_demo_mode_battery_plugged</string>
+
 </resources>
