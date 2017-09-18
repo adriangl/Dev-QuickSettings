@@ -65,6 +65,19 @@
     <string name="pref_keep_screen_on_mode_any">When connected to any power source</string>
 
     <string name="pref_header_demo_mode">Demo mode</string>
+    <string name="pref_demo_mode_battery">Battery settings</string>
     <string name="pref_demo_mode_battery_level">Battery level</string>
     <string name="pref_demo_mode_battery_plugged">Plug battery</string>
+    <string name="pref_demo_mode_network">Network settings</string>
+    <string name="pref_demo_mode_network_airplane">Airplane mode</string>
+    <string name="pref_demo_mode_network_fully">Show as fully connected</string>
+    <string name="pref_demo_mode_network_wifi">Wi-Fi settings</string>
+    <string name="pref_demo_mode_network_wifi_show">Show icon</string>
+    <string name="pref_demo_mode_network_wifi_level">Signal level</string>
+    <string name="pref_demo_mode_network_mobile">Mobile network settings</string>
+    <string name="pref_demo_mode_network_mobile_show">Show icon</string>
+    <string name="pref_demo_mode_network_mobile_level">Signal level</string>
+    <string name="pref_demo_mode_network_mobile_datatype">Data type</string>
+    <string name="pref_demo_mode_network_mobile_datatype_roam">Roaming</string>
+    <string name="pref_demo_mode_network_mobile_carriernetworkchange">Show carrier network change</string>
 </resources>

@@ -71,6 +71,9 @@ class DemoModePreferenceFragment : PreferenceFragment() {
         // updated to reflect the new value, per the Android Design
         // guidelines.
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_demo_mode_battery_level_key)))
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_demo_mode_network_wifi_level_key)))
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_demo_mode_network_mobile_level_key)))
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_demo_mode_network_mobile_datatype_key)))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -93,11 +96,10 @@ class DemoModePreferenceFragment : PreferenceFragment() {
      */
     @Suppress("MaxLineLength")
     private fun bindPreferenceSummaryToValue(preference: Preference,
-                                             listener: Preference.OnPreferenceChangeListener
-                                             = Preference.OnPreferenceChangeListener { _, _ -> true }) {
+                                             listener: Preference.OnPreferenceChangeListener =
+                                             Preference.OnPreferenceChangeListener { _, _ -> true }) {
         // Set the listener to watch for value changes.
-        preference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener {
-            changedPreference, newValue ->
+        preference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { changedPreference, newValue ->
             listener.onPreferenceChange(changedPreference, newValue) &&
                 sBindPreferenceSummaryToValueListener.onPreferenceChange(changedPreference, newValue)
         }

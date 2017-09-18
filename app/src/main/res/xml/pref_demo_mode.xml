@@ -18,16 +18,72 @@
 
     <PreferenceCategory
         android:key="@string/pref_demo_mode_battery_header"
-        android:title="Battery">
+        android:title="@string/pref_demo_mode_battery">
         <EditTextPreference
             android:defaultValue="100"
+            android:inputType="number"
             android:key="@string/pref_demo_mode_battery_level_key"
-            android:title="@string/pref_demo_mode_battery_level"
-            android:inputType="number"/>
+            android:title="@string/pref_demo_mode_battery_level" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_demo_mode_battery_plugged_key"
             android:title="@string/pref_demo_mode_battery_plugged" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="@string/pref_demo_mode_network_header"
+        android:title="@string/pref_demo_mode_network">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_network_airplane_key"
+            android:title="@string/pref_demo_mode_network_airplane" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_demo_mode_network_fully_key"
+            android:title="@string/pref_demo_mode_network_fully" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_network_mobile_carriernetworkchange_key"
+            android:title="@string/pref_demo_mode_network_mobile_carriernetworkchange" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="@string/pref_demo_mode_network_wifi_key"
+        android:title="@string/pref_demo_mode_network_wifi">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_demo_mode_network_wifi_show_key"
+            android:title="@string/pref_demo_mode_network_wifi_show" />
+        <ListPreference
+            android:defaultValue="@string/pref_demo_mode_network_signal_level_value_4"
+            android:dependency="@string/pref_demo_mode_network_wifi_show_key"
+            android:entries="@array/pref_demo_mode_network_signal_level_values"
+            android:entryValues="@array/pref_demo_mode_network_signal_level_values"
+            android:key="@string/pref_demo_mode_network_wifi_level_key"
+            android:title="@string/pref_demo_mode_network_wifi_level" />
+        </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="@string/pref_demo_mode_network_mobile_key"
+        android:title="@string/pref_demo_mode_network_mobile">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_demo_mode_network_mobile_show_key"
+            android:title="@string/pref_demo_mode_network_mobile_show" />
+        <ListPreference
+            android:defaultValue="@string/pref_demo_mode_network_signal_level_value_4"
+            android:dependency="@string/pref_demo_mode_network_mobile_show_key"
+            android:entries="@array/pref_demo_mode_network_signal_level_values"
+            android:entryValues="@array/pref_demo_mode_network_signal_level_values"
+            android:key="@string/pref_demo_mode_network_mobile_level_key"
+            android:title="@string/pref_demo_mode_network_mobile_level" />
+        <ListPreference
+            android:defaultValue="@string/pref_demo_mode_network_mobile_datatype_lte"
+            android:dependency="@string/pref_demo_mode_network_mobile_show_key"
+            android:entries="@array/pref_demo_mode_network_mobile_datatype_entries"
+            android:entryValues="@array/pref_demo_mode_network_mobile_datatype_values"
+            android:key="@string/pref_demo_mode_network_mobile_datatype_key"
+            android:title="@string/pref_demo_mode_network_mobile_datatype" />
     </PreferenceCategory>
 
 </PreferenceScreen>
