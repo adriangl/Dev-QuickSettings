@@ -97,5 +97,5 @@ dependencies {
 }
 
 // Run checks before compiling
-preBuild.dependsOn detektCheck
-detektCheck.dependsOn detektFormat
+//preBuild.dependsOn detektCheck
+//detektCheck.dependsOn detektFormat

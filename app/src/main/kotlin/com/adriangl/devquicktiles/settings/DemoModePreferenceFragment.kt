@@ -70,10 +70,19 @@ class DemoModePreferenceFragment : PreferenceFragment() {
         // to their values. When their values change, their summaries are
         // updated to reflect the new value, per the Android Design
         // guidelines.
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_demo_mode_battery_level_key)))
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_demo_mode_network_wifi_level_key)))
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_demo_mode_network_mobile_level_key)))
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_demo_mode_network_mobile_datatype_key)))
+        val preferenceKeyStrings = listOf(
+            getString(R.string.pref_demo_mode_clock_mode_key),
+            getString(R.string.pref_demo_mode_battery_level_key),
+            getString(R.string.pref_demo_mode_network_wifi_level_key),
+            getString(R.string.pref_demo_mode_network_mobile_level_key),
+            getString(R.string.pref_demo_mode_network_mobile_datatype_key),
+            getString(R.string.pref_demo_mode_network_sims_key),
+            getString(R.string.pref_demo_mode_bars_mode_key)
+        )
+
+        for (key in preferenceKeyStrings) {
+            bindPreferenceSummaryToValue(findPreference(key))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

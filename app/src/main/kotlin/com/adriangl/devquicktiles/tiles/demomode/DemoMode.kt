@@ -199,12 +199,17 @@ class Network(var airplane: Boolean? = null,
 class Bars(var mode: Mode? = null) : CommandHolder() {
     /**
      * Enumerates possible values for the mode parameter.
+     *
+     * Values extracted from Android source code:
+     * https://android.googlesource.com/platform/frameworks/base/+/0ddfa0e/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java#3304
      */
     @SuppressWarnings("UndocumentedPublicClass")
     enum class Mode(val value: String) {
         OPAQUE("opaque"),
+        TRANSLUCENT("translucent"),
         SEMI_TRANSPARENT("semi-transparent"),
-        TRANSPARENT("transparent");
+        TRANSPARENT("transparent"),
+        WARNING("warning");
     }
 
     override fun getOwnCommands(): List<List<Command>> {

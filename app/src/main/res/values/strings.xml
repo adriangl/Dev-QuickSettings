@@ -64,6 +64,11 @@
     <string name="pref_keep_screen_on_mode_wireless">When connected to a wireless source</string>
     <string name="pref_keep_screen_on_mode_any">When connected to any power source</string>
 
+    <string name="pref_demo_mode_clock">Clock settings</string>
+    <string name="pref_demo_mode_clock_mode">Clock mode</string>
+    <string name="pref_demo_mode_clock_mode_none">Don\'t mock</string>
+    <string name="pref_demo_mode_clock_mode_automatic">Automatic</string>
+    <string name="pref_demo_mode_clock_mode_custom">Custom time</string>
     <string name="pref_header_demo_mode">Demo mode</string>
     <string name="pref_demo_mode_battery">Battery settings</string>
     <string name="pref_demo_mode_battery_level">Battery level</string>
@@ -78,6 +83,27 @@
     <string name="pref_demo_mode_network_mobile_show">Show icon</string>
     <string name="pref_demo_mode_network_mobile_level">Signal level</string>
     <string name="pref_demo_mode_network_mobile_datatype">Data type</string>
+    <string name="pref_demo_mode_network_mobile_datatype_hidden">Hidden</string>
     <string name="pref_demo_mode_network_mobile_datatype_roam">Roaming</string>
     <string name="pref_demo_mode_network_mobile_carriernetworkchange">Show carrier network change</string>
+    <string name="pref_demo_mode_network_nosim">Show no SIMs icon</string>
+    <string name="pref_demo_mode_network_sims">SIM number</string>
+    <string name="pref_demo_mode_clock_time">Custom time</string>
+    <string name="pref_demo_mode_bars">Status &amp; navigation bar settings</string>
+    <string name="pref_demo_mode_bars_mode">Mode</string>
+    <string name="pref_demo_mode_bars_mode_default">Default</string>
+    <string name="pref_demo_mode_bars_mode_opaque">Opaque</string>
+    <string name="pref_demo_mode_bars_mode_translucent">Translucent</string>
+    <string name="pref_demo_mode_bars_mode_semi_transparent">Semi-transparent</string>
+    <string name="pref_demo_mode_bars_mode_transparent">Transparent</string>
+    <string name="pref_demo_mode_bars_mode_warning">Warning</string>
+    <string name="pref_demo_mode_notifications_show">Show notifications</string>
+    <string name="pref_demo_mode_status">Status bar system icons settings</string>
+    <string name="pref_demo_mode_status_hidden">Hidden</string>
+    <string name="pref_demo_mode_status_volume">Volume</string>
+    <string name="pref_demo_mode_status_volume_silent">Silent</string>
+    <string name="pref_demo_mode_status_volume_vibrate">Vibrate</string>
+    <string name="pref_demo_mode_status_bluetooth">Bluetooth</string>
+    <string name="pref_demo_mode_status_bluetooth_connected">Connected</string>
+    <string name="pref_demo_mode_status_bluetooth_disconnected">Disconnected</string>
 </resources>
