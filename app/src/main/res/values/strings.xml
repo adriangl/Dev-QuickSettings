@@ -106,4 +106,13 @@
     <string name="pref_demo_mode_status_bluetooth">Bluetooth</string>
     <string name="pref_demo_mode_status_bluetooth_connected">Connected</string>
     <string name="pref_demo_mode_status_bluetooth_disconnected">Disconnected</string>
+    <string name="pref_demo_mode_status_location">Location</string>
+    <string name="pref_demo_mode_status_alarm">Alarm</string>
+    <string name="pref_demo_mode_status_zen">Do not disturb</string>
+    <string name="pref_demo_mode_status_sync">Sync</string>
+    <string name="pref_demo_mode_status_tty">TTY</string>
+    <string name="pref_demo_mode_status_eri">CDMA ERI</string>
+    <string name="pref_demo_mode_status_mute">Mute</string>
+    <string name="pref_demo_mode_status_speakerphone">Speakerphone</string>
+    <string name="pref_demo_mode_status_managedprofile">Managed profile</string>
 </resources>

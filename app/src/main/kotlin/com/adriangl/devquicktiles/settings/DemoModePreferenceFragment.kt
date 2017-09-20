@@ -43,13 +43,12 @@ class DemoModePreferenceFragment : PreferenceFragment() {
         if (preference is ListPreference) {
             // For list preferences, look up the correct display value in
             // the preference's 'entries' list.
-            val listPreference = preference
-            val index = listPreference.findIndexOfValue(stringValue)
+            val index = preference.findIndexOfValue(stringValue)
 
             // Set the summary to reflect the new value.
             preference.setSummary(
                 if (index >= 0)
-                    listPreference.entries[index]
+                    preference.entries[index]
                 else
                     null)
 
@@ -77,7 +76,9 @@ class DemoModePreferenceFragment : PreferenceFragment() {
             getString(R.string.pref_demo_mode_network_mobile_level_key),
             getString(R.string.pref_demo_mode_network_mobile_datatype_key),
             getString(R.string.pref_demo_mode_network_sims_key),
-            getString(R.string.pref_demo_mode_bars_mode_key)
+            getString(R.string.pref_demo_mode_bars_mode_key),
+            getString(R.string.pref_demo_mode_status_volume_key),
+            getString(R.string.pref_demo_mode_status_bluetooth_key)
         )
 
         for (key in preferenceKeyStrings) {

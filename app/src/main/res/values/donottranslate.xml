@@ -182,5 +182,14 @@
     <string name="pref_demo_mode_status_key">pref_demo_mode_status</string>
     <string name="pref_demo_mode_status_volume_key">pref_demo_mode_status_volume</string>
     <string name="pref_demo_mode_status_bluetooth_key">pref_demo_mode_status_bluetooth</string>
+    <string name="pref_demo_mode_status_location_key">pref_demo_mode_status_location</string>
+    <string name="pref_demo_mode_status_alarm_key">pref_demo_mode_status_alarm</string>
+    <string name="pref_demo_mode_status_zen_key">pref_demo_mode_status_zen</string>
+    <string name="pref_demo_mode_status_sync_key">pref_demo_mode_status_sync</string>
+    <string name="pref_demo_mode_status_tty_key">pref_demo_mode_status_tty</string>
+    <string name="pref_demo_mode_status_eri_key">pref_demo_mode_status_eri</string>
+    <string name="pref_demo_mode_status_mute_key">pref_demo_mode_status_mute</string>
+    <string name="pref_demo_mode_status_speakerphone_key">pref_demo_mode_status_speakerphone</string>
+    <string name="pref_demo_mode_status_managedprofile_key">pref_demo_mode_status_managedprofile</string>
 
 </resources>

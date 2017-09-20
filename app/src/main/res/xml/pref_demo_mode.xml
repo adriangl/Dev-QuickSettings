@@ -149,6 +149,42 @@
             android:entryValues="@array/pref_demo_mode_status_bluetooth_values"
             android:key="@string/pref_demo_mode_status_bluetooth_key"
             android:title="@string/pref_demo_mode_status_bluetooth" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_status_location_key"
+            android:title="@string/pref_demo_mode_status_location" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_status_alarm_key"
+            android:title="@string/pref_demo_mode_status_alarm" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_status_zen_key"
+            android:title="@string/pref_demo_mode_status_zen" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_status_sync_key"
+            android:title="@string/pref_demo_mode_status_sync" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_status_tty_key"
+            android:title="@string/pref_demo_mode_status_tty" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_status_eri_key"
+            android:title="@string/pref_demo_mode_status_eri" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_status_mute_key"
+            android:title="@string/pref_demo_mode_status_mute" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_status_speakerphone_key"
+            android:title="@string/pref_demo_mode_status_speakerphone" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_demo_mode_status_managedprofile_key"
+            android:title="@string/pref_demo_mode_status_managedprofile" />
     </PreferenceCategory>
 
 </PreferenceScreen>
