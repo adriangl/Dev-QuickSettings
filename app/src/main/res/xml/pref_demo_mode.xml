@@ -20,14 +20,14 @@
     <PreferenceCategory
         android:key="@string/pref_demo_mode_clock_header"
         android:title="@string/pref_demo_mode_clock">
-        <com.adriangl.devquicktiles.settings.DependentListPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomDependentListPreference
             android:defaultValue="@string/pref_demo_mode_clock_mode_value_automatic"
             android:entries="@array/pref_demo_mode_clock_mode_entries"
             android:entryValues="@array/pref_demo_mode_clock_mode_values"
             android:key="@string/pref_demo_mode_clock_mode_key"
             android:title="@string/pref_demo_mode_clock_mode"
             app:dependentValue="@string/pref_demo_mode_clock_mode_value_custom" />
-        <com.adriangl.devquicktiles.settings.TimePreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomTimePreference
             android:dependency="@string/pref_demo_mode_clock_mode_key"
             android:key="@string/pref_demo_mode_clock_time_key"
             android:theme="@android:style/Theme.NoTitleBar"
@@ -38,12 +38,12 @@
     <PreferenceCategory
         android:key="@string/pref_demo_mode_battery_header"
         android:title="@string/pref_demo_mode_battery">
-        <EditTextPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomEditTextPreference
             android:defaultValue="100"
             android:inputType="number"
             android:key="@string/pref_demo_mode_battery_level_key"
             android:title="@string/pref_demo_mode_battery_level" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_demo_mode_battery_plugged_key"
             android:title="@string/pref_demo_mode_battery_plugged" />
@@ -53,23 +53,23 @@
     <PreferenceCategory
         android:key="@string/pref_demo_mode_network_header"
         android:title="@string/pref_demo_mode_network">
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_network_airplane_key"
             android:title="@string/pref_demo_mode_network_airplane" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_demo_mode_network_fully_key"
             android:title="@string/pref_demo_mode_network_fully" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_network_mobile_carriernetworkchange_key"
             android:title="@string/pref_demo_mode_network_mobile_carriernetworkchange" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_network_nosim_key"
             android:title="@string/pref_demo_mode_network_nosim" />
-        <EditTextPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomEditTextPreference
             android:defaultValue="1"
             android:inputType="number"
             android:key="@string/pref_demo_mode_network_sims_key"
@@ -80,11 +80,11 @@
     <PreferenceCategory
         android:key="@string/pref_demo_mode_network_wifi_key"
         android:title="@string/pref_demo_mode_network_wifi">
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_demo_mode_network_wifi_show_key"
             android:title="@string/pref_demo_mode_network_wifi_show" />
-        <ListPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomListPreference
             android:defaultValue="@string/pref_demo_mode_network_signal_level_value_4"
             android:dependency="@string/pref_demo_mode_network_wifi_show_key"
             android:entries="@array/pref_demo_mode_network_signal_level_values"
@@ -97,18 +97,18 @@
     <PreferenceCategory
         android:key="@string/pref_demo_mode_network_mobile_key"
         android:title="@string/pref_demo_mode_network_mobile">
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_demo_mode_network_mobile_show_key"
             android:title="@string/pref_demo_mode_network_mobile_show" />
-        <ListPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomListPreference
             android:defaultValue="@string/pref_demo_mode_network_signal_level_value_4"
             android:dependency="@string/pref_demo_mode_network_mobile_show_key"
             android:entries="@array/pref_demo_mode_network_signal_level_values"
             android:entryValues="@array/pref_demo_mode_network_signal_level_values"
             android:key="@string/pref_demo_mode_network_mobile_level_key"
             android:title="@string/pref_demo_mode_network_mobile_level" />
-        <ListPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomListPreference
             android:defaultValue="@string/pref_demo_mode_network_mobile_datatype_value_lte"
             android:dependency="@string/pref_demo_mode_network_mobile_show_key"
             android:entries="@array/pref_demo_mode_network_mobile_datatype_entries"
@@ -121,13 +121,13 @@
     <PreferenceCategory
         android:key="@string/pref_demo_mode_bars_key"
         android:title="@string/pref_demo_mode_bars">
-        <ListPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomListPreference
             android:defaultValue="@string/pref_demo_mode_bars_mode_value_default"
             android:entries="@array/pref_demo_mode_bars_mode_entries"
             android:entryValues="@array/pref_demo_mode_bars_mode_values"
             android:key="@string/pref_demo_mode_bars_mode_key"
             android:title="@string/pref_demo_mode_bars_mode" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_notifications_show_key"
             android:title="@string/pref_demo_mode_notifications_show" />
@@ -137,51 +137,51 @@
     <PreferenceCategory
         android:key="@string/pref_demo_mode_status_key"
         android:title="@string/pref_demo_mode_status">
-        <ListPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomListPreference
             android:defaultValue="@string/pref_demo_mode_status_value_hide"
             android:entries="@array/pref_demo_mode_status_volume_entries"
             android:entryValues="@array/pref_demo_mode_status_volume_values"
             android:key="@string/pref_demo_mode_status_volume_key"
             android:title="@string/pref_demo_mode_status_volume" />
-        <ListPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomListPreference
             android:defaultValue="@string/pref_demo_mode_status_value_hide"
             android:entries="@array/pref_demo_mode_status_bluetooth_entries"
             android:entryValues="@array/pref_demo_mode_status_bluetooth_values"
             android:key="@string/pref_demo_mode_status_bluetooth_key"
             android:title="@string/pref_demo_mode_status_bluetooth" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_status_location_key"
             android:title="@string/pref_demo_mode_status_location" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_status_alarm_key"
             android:title="@string/pref_demo_mode_status_alarm" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_status_zen_key"
             android:title="@string/pref_demo_mode_status_zen" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_status_sync_key"
             android:title="@string/pref_demo_mode_status_sync" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_status_tty_key"
             android:title="@string/pref_demo_mode_status_tty" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_status_eri_key"
             android:title="@string/pref_demo_mode_status_eri" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_status_mute_key"
             android:title="@string/pref_demo_mode_status_mute" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_status_speakerphone_key"
             android:title="@string/pref_demo_mode_status_speakerphone" />
-        <SwitchPreference
+        <com.adriangl.devquicktiles.settings.preferences.CustomSwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_demo_mode_status_managedprofile_key"
             android:title="@string/pref_demo_mode_status_managedprofile" />

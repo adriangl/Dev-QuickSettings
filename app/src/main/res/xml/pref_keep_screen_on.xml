@@ -16,7 +16,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
+    <com.adriangl.devquicktiles.settings.preferences.CustomListPreference
         android:defaultValue="@string/pref_keep_screen_on_mode_any_value"
         android:entries="@array/pref_keep_screen_on_titles"
         android:entryValues="@array/pref_keep_screen_on_values"

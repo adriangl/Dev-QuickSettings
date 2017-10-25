@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.adriangl.devquicktiles.settings
+package com.adriangl.devquicktiles.settings.preferences
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -35,7 +35,7 @@ import java.util.*
  * The value of the preference is saved in milliseconds; to recover the time set in the preference, use the [Calendar] class and set
  * [Calendar.setTimeInMillis] to properly recover hours and minutes from it.
  */
-class TimePreference
+open class TimePreference
 @JvmOverloads constructor(context: Context,
                           attrs: AttributeSet? = null,
                           defStyle: Int = android.R.attr.dialogPreferenceStyle) : DialogPreference(context, attrs, defStyle) {

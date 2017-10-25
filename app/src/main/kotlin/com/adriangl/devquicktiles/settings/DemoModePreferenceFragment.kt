@@ -46,11 +46,7 @@ class DemoModePreferenceFragment : PreferenceFragment() {
             val index = preference.findIndexOfValue(stringValue)
 
             // Set the summary to reflect the new value.
-            preference.setSummary(
-                if (index >= 0)
-                    preference.entries[index]
-                else
-                    null)
+            preference.setSummary(if (index >= 0) preference.entries[index] else null)
 
         } else {
             // For all other preferences, set the summary to the value's
@@ -65,8 +61,8 @@ class DemoModePreferenceFragment : PreferenceFragment() {
         addPreferencesFromResource(R.xml.pref_demo_mode)
         setHasOptionsMenu(true)
 
-        // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-        // to their values. When their values change, their summaries are
+        // Bind the summaries to their values.
+        // When their values change, their summaries are
         // updated to reflect the new value, per the Android Design
         // guidelines.
         val preferenceKeyStrings = listOf(

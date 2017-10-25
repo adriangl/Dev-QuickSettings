@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.adriangl.devquicktiles.settings
+package com.adriangl.devquicktiles.settings.preferences
 
 import android.content.Context
 import android.preference.ListPreference
@@ -25,7 +25,7 @@ import com.adriangl.devquicktiles.R
  * List preference that allows defining a dependent value to enable dependent preferences.
  * Use [dependentValue] (app:dependentValue in XML) to declare the value that will enable dependent settings.
  */
-class DependentListPreference @JvmOverloads constructor(context: Context,
+open class DependentListPreference @JvmOverloads constructor(context: Context,
                                                         attrs: AttributeSet? = null) : ListPreference(context, attrs) {
     var dependentValue: String? = null
         set(newDependentValue) {
